@@ -11,6 +11,8 @@ import {
 } from "lucide-react";
 import styles from "../styles/Layout.module.css";
 
+import logo from "../assets/logo.png";
+
 export default function Layout() {
   const { user, profile, signOut } = useAuth();
   const location = useLocation();
@@ -34,7 +36,7 @@ export default function Layout() {
         }`}
       >
         <div className={styles.logoContainer}>
-          <img src="/src/assets/logo.png" alt="Logo" className={styles.logo} />
+          <img src={logo} alt="Logo" className={styles.logo} />
         </div>
 
         <nav className={styles.nav}>

@@ -165,14 +165,13 @@ export default function Dashboard() {
 
   const handleExportPDF = () => {
     const doc = new jsPDF();
-    const logoUrl = "/src/assets/logo.png";
 
     // Header
     // Note: Assuming logo loads, otherwise it might be blank.
     // In production, better to use base64 string for reliability.
     try {
       const img = new Image();
-      img.src = logoUrl;
+      img.src = logo;
       // Dimensions: Width ~47 (39 * 1.2), Height ~13 (15 * 0.85)
       doc.addImage(img, "PNG", 14, 10, 47, 13);
     } catch (e) {
