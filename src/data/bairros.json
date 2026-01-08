@@ -1,0 +1,1688 @@
+{
+  "total": 240,
+  "perPage": 10000,
+  "page": 1,
+  "lastPage": 1,
+  "data": [
+    {
+      "id": 4,
+      "nome": "CONJUNTO HABITACIONAL JARDIM PRESIDENTE II",
+      "cidade_id": 1,
+      "codigo": 78090180,
+      "apelido": "Jardim Presidente II"
+    },
+    {
+      "id": 53,
+      "nome": "Residencial São Carlos",
+      "cidade_id": 1,
+      "codigo": 78051030,
+      "apelido": "Residencial São Carlos"
+    },
+    {
+      "id": 32,
+      "nome": "CONJUNTO HABITACIONAL CPA III - SETOR 05",
+      "cidade_id": 1,
+      "codigo": 78058494,
+      "apelido": "CPA III - Setor 05"
+    },
+    {
+      "id": 6,
+      "nome": "JARDIM SANTA AMALIA",
+      "cidade_id": 1,
+      "codigo": 78035770,
+      "apelido": "Jardim Santa Amalia"
+    },
+    {
+      "id": 30,
+      "nome": "NÚCLEO HABITACIONAL SÃO GONÇALO",
+      "cidade_id": 1,
+      "codigo": 7809000,
+      "apelido": "São Gonçalo"
+    },
+    {
+      "id": 46,
+      "nome": "SETOR 02 DO NÚCLEO HABITACIONAL CPA I",
+      "cidade_id": 1,
+      "codigo": 78055170,
+      "apelido": "CPA I - Setor 02"
+    },
+    {
+      "id": 54,
+      "nome": "São João Del Rey",
+      "cidade_id": 1,
+      "codigo": 78093001,
+      "apelido": "São João Del Rey"
+    },
+    {
+      "id": 47,
+      "nome": "SETOR 01 DO NÚCLEO HABITACIONAL CPA I",
+      "cidade_id": 1,
+      "codigo": 78055255,
+      "apelido": "CPA I - Setor 01"
+    },
+    {
+      "id": 48,
+      "nome": "SETOR 03 DO NÚCLEO HABITACIONAL CPA I",
+      "cidade_id": 1,
+      "codigo": 78055115,
+      "apelido": "CPA I - Setor 03"
+    },
+    {
+      "id": 35,
+      "nome": "Teste em Produção",
+      "cidade_id": 2,
+      "codigo": 101010,
+      "apelido": "Teste em Produção"
+    },
+    {
+      "id": 20,
+      "nome": "CONJUNTO HABITACIONAL CPA II",
+      "cidade_id": 1,
+      "codigo": 78055458,
+      "apelido": "CPA II"
+    },
+    {
+      "id": 40,
+      "nome": "CONJUNTO HABITACIONAL GRANDE TERCEIRO",
+      "cidade_id": 1,
+      "codigo": 34,
+      "apelido": "Grande terceiro"
+    },
+    {
+      "id": 44,
+      "nome": "CONJUNTO HABITACIONAL CPA III - SETOR 01",
+      "cidade_id": 1,
+      "codigo": 78058496,
+      "apelido": "CPA III - 1º Etapa"
+    },
+    {
+      "id": 45,
+      "nome": "CONJUNTO HABITACIONAL CPA III - SETOR 02",
+      "cidade_id": 1,
+      "codigo": 78058342,
+      "apelido": "CPA III - 2 Etapa"
+    },
+    {
+      "id": 33,
+      "nome": "CONJUNTO HABITACIONAL CPA III - SETOR 03",
+      "cidade_id": 1,
+      "codigo": 78058324,
+      "apelido": "CPA III - 3° Etapa"
+    },
+    {
+      "id": 22,
+      "nome": "CPA I",
+      "cidade_id": 1,
+      "codigo": 78058000,
+      "apelido": "CPA I"
+    },
+    {
+      "id": 11,
+      "nome": "CONJUNTO HABITACIONAL CPA III - SETOR 04",
+      "cidade_id": 1,
+      "codigo": 78058458,
+      "apelido": "CPA III - 4º Etapa"
+    },
+    {
+      "id": 57,
+      "nome": " JARDIM VITÓRIA",
+      "cidade_id": 1,
+      "codigo": 78055753,
+      "apelido": "Jardim Vitória"
+    },
+    {
+      "id": 13,
+      "nome": "NÚCLEO HABITACIONAL CPA IV - 1ª ETAPA",
+      "cidade_id": 1,
+      "codigo": 78050116,
+      "apelido": "CPA IV - 1º Etapa"
+    },
+    {
+      "id": 16,
+      "nome": "NÚCLEO HABITACIONAL CPA IV - 4ª ETAPA",
+      "cidade_id": 1,
+      "codigo": 78058250,
+      "apelido": "CPA IV - 4º Etapa"
+    },
+    {
+      "id": 10,
+      "nome": "NÚCLEO HABITACIONAL CPA IV - 5ª ETAPA",
+      "cidade_id": 1,
+      "codigo": 78058056,
+      "apelido": "CPA IV - 5º Etapa"
+    },
+    {
+      "id": 58,
+      "nome": "JARDIM BRASIL PARTE 1",
+      "cidade_id": 1,
+      "codigo": 78058266,
+      "apelido": "Jardim Brasil Parte 1"
+    },
+    {
+      "id": 25,
+      "nome": "SANTA INES",
+      "cidade_id": 1,
+      "codigo": 78051283,
+      "apelido": "SANTA INES"
+    },
+    {
+      "id": 26,
+      "nome": "NÚCLEO HABITACIONAL CPA IV - 2ª ETAPA",
+      "cidade_id": 1,
+      "codigo": 78058100,
+      "apelido": "CPA IV - 2º ETAPA"
+    },
+    {
+      "id": 27,
+      "nome": "NÚCLEO HABITACIONAL CPA IV - 3ª ETAPA",
+      "cidade_id": 1,
+      "codigo": 78058196,
+      "apelido": "CPA IV - 03 Etapa"
+    },
+    {
+      "id": 31,
+      "nome": "NÚCLEO HABITACIONAL CIDADE VERDE",
+      "cidade_id": 1,
+      "codigo": 78028760,
+      "apelido": "Cidade Verde"
+    },
+    {
+      "id": 1,
+      "nome": "NÚCLEO HABITACIONAL CRISTO REI",
+      "cidade_id": 2,
+      "codigo": 78118338,
+      "apelido": "Cohab Cristo Rei"
+    },
+    {
+      "id": 70,
+      "nome": "Núcleo Habitacional 13 de Maio",
+      "cidade_id": 3,
+      "codigo": 74854606,
+      "apelido": "Núcleo Habitacional 13 de Maio"
+    },
+    {
+      "id": 9,
+      "nome": "NÚCLEO HABITACIONAL NOVA CUIABÁ",
+      "cidade_id": 1,
+      "codigo": 78056022,
+      "apelido": "Nova Cuiaba"
+    },
+    {
+      "id": 59,
+      "nome": "JARDIM BRASIL PARTE 2",
+      "cidade_id": 1,
+      "codigo": 78058264,
+      "apelido": "Jardim Brasil Parte 2"
+    },
+    {
+      "id": 15,
+      "nome": "RESIDENCIAL ITAPAJÉ",
+      "cidade_id": 1,
+      "codigo": 78090462,
+      "apelido": "Itapaje"
+    },
+    {
+      "id": 37,
+      "nome": "CONJUNTO HABITACIONAL VILA REAL",
+      "cidade_id": 1,
+      "codigo": 78048000,
+      "apelido": "Jardim Vila Real"
+    },
+    {
+      "id": 43,
+      "nome": "CONJUNTO HABITACIONAL DOM BOSCO",
+      "cidade_id": 2,
+      "codigo": 42,
+      "apelido": "Dom Bosco"
+    },
+    {
+      "id": 39,
+      "nome": "CONJUNTO HABITACIONAL DOM ORLANDO CHAVES",
+      "cidade_id": 2,
+      "codigo": 78118187,
+      "apelido": "Dom Orlando Chaves"
+    },
+    {
+      "id": 23,
+      "nome": "CONJUNTO HABITACIONAL CABO MICHEL",
+      "cidade_id": 2,
+      "codigo": 78158285,
+      "apelido": "Cabo Michel"
+    },
+    {
+      "id": 3,
+      "nome": "NÚCLEO HABITACIONAL JARDIM PRIMAVERA",
+      "cidade_id": 2,
+      "codigo": 78132668,
+      "apelido": "Jardim Primavera"
+    },
+    {
+      "id": 8,
+      "nome": "NÚCLEO HABITACIONAL SANTA IZABEL",
+      "cidade_id": 2,
+      "codigo": 78150272,
+      "apelido": "Santa Izabel"
+    },
+    {
+      "id": 21,
+      "nome": "CONJUNTO HABITACIONAL TARUMÃ I",
+      "cidade_id": 2,
+      "codigo": 78158432,
+      "apelido": "Tarumã"
+    },
+    {
+      "id": 24,
+      "nome": "NÚCLEO HABITACIONAL NOSSA SENHORA DA GUIA",
+      "cidade_id": 2,
+      "codigo": 78165990,
+      "apelido": "Nossa Senhora da Guia"
+    },
+    {
+      "id": 34,
+      "nome": "CONJUNTO HABITACIONAL JAIME VERÍSSIMO DE CAMPOS",
+      "cidade_id": 2,
+      "codigo": 78120420,
+      "apelido": "Jaime V. de Campos"
+    },
+    {
+      "id": 41,
+      "nome": "RESIDENCIAL ALBERTO CANELLAS",
+      "cidade_id": 2,
+      "codigo": 40,
+      "apelido": "Cohab Canelas "
+    },
+    {
+      "id": 36,
+      "nome": "RESIDENCIAL ASA BRANCA",
+      "cidade_id": 2,
+      "codigo": 37,
+      "apelido": "Asa Branca"
+    },
+    {
+      "id": 2,
+      "nome": "ASA BELLA",
+      "cidade_id": 2,
+      "codigo": 78149220,
+      "apelido": "Asa Bella"
+    },
+    {
+      "id": 7,
+      "nome": "RESIDENCIAL JR II",
+      "cidade_id": 2,
+      "codigo": 78132530,
+      "apelido": "24 de Dezembro"
+    },
+    {
+      "id": 5,
+      "nome": "RESIDENCIAL AM",
+      "cidade_id": 2,
+      "codigo": 78132430,
+      "apelido": "07 de Maio"
+    },
+    {
+      "id": 62,
+      "nome": "Renascer",
+      "cidade_id": 1,
+      "codigo": 78061386,
+      "apelido": "Renascer"
+    },
+    {
+      "id": 56,
+      "nome": "1º DE MARÇO - 2ª FASE",
+      "cidade_id": 1,
+      "codigo": 78056816,
+      "apelido": "Jardim 1º de Março - 2ª Fase"
+    },
+    {
+      "id": 55,
+      "nome": "1º DE MARÇO - 1ª FASE",
+      "cidade_id": 1,
+      "codigo": 78058632,
+      "apelido": "Jardim 1º de Março - 1ª Fase"
+    },
+    {
+      "id": 65,
+      "nome": "NÚCLEO HABITACIONAL JARDIM INDUSTRIÁRIO II - 2ª ETAPA",
+      "cidade_id": 1,
+      "codigo": 78098644,
+      "apelido": "Jardim Industriário II - 2ª Etapa"
+    },
+    {
+      "id": 60,
+      "nome": "JARDIM BRASIL PARTE 3",
+      "cidade_id": 1,
+      "codigo": 78058262,
+      "apelido": "Jardim Brasil Parte 3"
+    },
+    {
+      "id": 61,
+      "nome": "JARDIM BRASIL PARTE 4",
+      "cidade_id": 1,
+      "codigo": 78058260,
+      "apelido": "Jardim Brasil Parte 4"
+    },
+    {
+      "id": 63,
+      "nome": "JARDIM FLORIANÓPOLIS",
+      "cidade_id": 1,
+      "codigo": 78055814,
+      "apelido": "Jardim Florianópolis"
+    },
+    {
+      "id": 64,
+      "nome": "JARDIM UNIÃO",
+      "cidade_id": 1,
+      "codigo": 78055867,
+      "apelido": "Jardim União"
+    },
+    {
+      "id": 66,
+      "nome": "NÚCLEO HABITACIONAL JARDIM INDUSTRIÁRIO II - 3ª ETAPA",
+      "cidade_id": 1,
+      "codigo": 78098636,
+      "apelido": "Jardim Industriário II - 3ª Etapa"
+    },
+    {
+      "id": 29,
+      "nome": "NÚCLEO HABITACIONAL JARDIM INDUSTRIÁRIO II - 1ª ETAPA",
+      "cidade_id": 1,
+      "codigo": 78098622,
+      "apelido": "Jardim Industriário II - 1ª Etapa"
+    },
+    {
+      "id": 14,
+      "nome": "Núcleo Habitacional - Tijucal",
+      "cidade_id": 1,
+      "codigo": 78088150,
+      "apelido": "Tijucal"
+    },
+    {
+      "id": 49,
+      "nome": "NÚCLEO HABITACIONAL - TIJUCAL SETOR I",
+      "cidade_id": 1,
+      "codigo": 78088055,
+      "apelido": "TIJUCAL - SETOR 01"
+    },
+    {
+      "id": 50,
+      "nome": "NÚCLEO HABITACIONAL - TIJUCAL SETOR II",
+      "cidade_id": 1,
+      "codigo": 78088210,
+      "apelido": "TIJUCAL - SETOR 02"
+    },
+    {
+      "id": 51,
+      "nome": "NÚCLEO HABITACIONAL - TIJUCAL SETOR 3",
+      "cidade_id": 1,
+      "codigo": 78088365,
+      "apelido": "TIJUCAL - SETOR 03"
+    },
+    {
+      "id": 52,
+      "nome": "NÚCLEO HABITACIONAL - TIJUCAL SETOR 4",
+      "cidade_id": 1,
+      "codigo": 78088445,
+      "apelido": "TIJUCAL - SETOR 04"
+    },
+    {
+      "id": 67,
+      "nome": "Santo Antonio do Pedregal",
+      "cidade_id": 1,
+      "codigo": 78055040,
+      "apelido": "Santo Antonio do Pedregal"
+    },
+    {
+      "id": 68,
+      "nome": "Núcleo Habitacional Tarumã",
+      "cidade_id": 3,
+      "codigo": 78303093,
+      "apelido": "Jardim Tarumã"
+    },
+    {
+      "id": 75,
+      "nome": "Loteamento Urbano do Distrito Boa Esperança",
+      "cidade_id": 5,
+      "codigo": 71554454,
+      "apelido": "Loteamento Urbano do Distrito Boa Esperança"
+    },
+    {
+      "id": 73,
+      "nome": "Jardim Planalto II",
+      "cidade_id": 4,
+      "codigo": 69834366,
+      "apelido": "Jardim Planalto II"
+    },
+    {
+      "id": 74,
+      "nome": "JARDIM SÃO ROSALINO",
+      "cidade_id": 3,
+      "codigo": 46087483,
+      "apelido": "JARDIM SÃO ROSALINO"
+    },
+    {
+      "id": 76,
+      "nome": "Jardim Morada do Sol",
+      "cidade_id": 3,
+      "codigo": 46137517,
+      "apelido": "Jardim Morada do Sol"
+    },
+    {
+      "id": 77,
+      "nome": "Sonho Meu",
+      "cidade_id": 1,
+      "codigo": 78099135,
+      "apelido": "Sonho Meu"
+    },
+    {
+      "id": 78,
+      "nome": "Vista da Chapada",
+      "cidade_id": 1,
+      "codigo": 7899050,
+      "apelido": "Vista da Chapada"
+    },
+    {
+      "id": 71,
+      "nome": "Quadras R1 e R2 do Jardim 13 de Maio",
+      "cidade_id": 3,
+      "codigo": 74844606,
+      "apelido": "Quadras R1 e R2 do Jardim 13 de Maio"
+    },
+    {
+      "id": 79,
+      "nome": "Voluntários da Pátria",
+      "cidade_id": 1,
+      "codigo": 78099382,
+      "apelido": "Voluntários da Pátria"
+    },
+    {
+      "id": 80,
+      "nome": "Jardim Arco Íris",
+      "cidade_id": 6,
+      "codigo": 34646720,
+      "apelido": "Jardim Arco Íris"
+    },
+    {
+      "id": 81,
+      "nome": "Jardim Olinda",
+      "cidade_id": 6,
+      "codigo": 34626719,
+      "apelido": "Jardim Olinda"
+    },
+    {
+      "id": 82,
+      "nome": "Residencial Casa Nova",
+      "cidade_id": 6,
+      "codigo": 34616719,
+      "apelido": "Residencial Casa Nova"
+    },
+    {
+      "id": 83,
+      "nome": "Jardim dos Ipês",
+      "cidade_id": 3,
+      "codigo": 46447475,
+      "apelido": "Jardim dos Ipês"
+    },
+    {
+      "id": 84,
+      "nome": "Jardim Presidente",
+      "cidade_id": 3,
+      "codigo": 46377524,
+      "apelido": "Jardim Presidente"
+    },
+    {
+      "id": 85,
+      "nome": "Vila Esmeralda I",
+      "cidade_id": 3,
+      "codigo": 14635752,
+      "apelido": "Vila Esmeralda I"
+    },
+    {
+      "id": 86,
+      "nome": "Vila Esmeralda II",
+      "cidade_id": 3,
+      "codigo": 46337525,
+      "apelido": "Vila Esmeralda II"
+    },
+    {
+      "id": 88,
+      "nome": "Jardim Fortaleza",
+      "cidade_id": 1,
+      "codigo": 78065433,
+      "apelido": "Jardim Fortaleza"
+    },
+    {
+      "id": 89,
+      "nome": "Vila Goiás",
+      "cidade_id": 3,
+      "codigo": 46247475,
+      "apelido": "Vila Goiás"
+    },
+    {
+      "id": 72,
+      "nome": "Jardim Planalto",
+      "cidade_id": 4,
+      "codigo": 69754366,
+      "apelido": "Jardim Planalto I"
+    },
+    {
+      "id": 90,
+      "nome": "Jardim Eldorado",
+      "cidade_id": 2,
+      "codigo": 78150672,
+      "apelido": "Jardim Eldorado"
+    },
+    {
+      "id": 92,
+      "nome": "Jardim Boa Esperança",
+      "cidade_id": 8,
+      "codigo": 47847278,
+      "apelido": "Jardim Boa Esperança"
+    },
+    {
+      "id": 93,
+      "nome": "Vila Alvorada",
+      "cidade_id": 8,
+      "codigo": 47847295,
+      "apelido": "Vila Alvorada"
+    },
+    {
+      "id": 94,
+      "nome": "Jardim Santa Rosa",
+      "cidade_id": 8,
+      "codigo": 47837276,
+      "apelido": "Jardim Santa Rosa"
+    },
+    {
+      "id": 95,
+      "nome": "João Cristante",
+      "cidade_id": 9,
+      "codigo": 50697198,
+      "apelido": "João Cristante"
+    },
+    {
+      "id": 97,
+      "nome": "Cohab São Raimundo",
+      "cidade_id": 9,
+      "codigo": 50617173,
+      "apelido": "Cohab São Raimundo"
+    },
+    {
+      "id": 96,
+      "nome": "Núcleo Habitacional Nhambiquara",
+      "cidade_id": 9,
+      "codigo": 50667198,
+      "apelido": "Cohab Nhambiquara"
+    },
+    {
+      "id": 142,
+      "nome": "Palmiteira",
+      "cidade_id": 15,
+      "codigo": 14318755,
+      "apelido": "Palmiteira"
+    },
+    {
+      "id": 91,
+      "nome": "Jardim Bela Vista",
+      "cidade_id": 3,
+      "codigo": 75124597,
+      "apelido": "Jardim Bela Vista"
+    },
+    {
+      "id": 98,
+      "nome": "Jardim Maringá",
+      "cidade_id": 3,
+      "codigo": 46247477,
+      "apelido": "Jardim Maringá"
+    },
+    {
+      "id": 99,
+      "nome": "Jardim Vitória",
+      "cidade_id": 3,
+      "codigo": 46377519,
+      "apelido": "Jardim Vitória"
+    },
+    {
+      "id": 100,
+      "nome": "Patrimônio de Campo Novo do Parecis",
+      "cidade_id": 7,
+      "codigo": 36547893,
+      "apelido": "Patrimônio de Campo Novo do Parecis"
+    },
+    {
+      "id": 87,
+      "nome": "Patrimônio de Campo Novo do Parecis - Fase II",
+      "cidade_id": 7,
+      "codigo": 36467913,
+      "apelido": "Patrimônio de Campo Novo do Parecis - Fase II"
+    },
+    {
+      "id": 101,
+      "nome": "Roda D'água",
+      "cidade_id": 10,
+      "codigo": 45435976,
+      "apelido": "Roda D'Água"
+    },
+    {
+      "id": 102,
+      "nome": "Bom Jardim",
+      "cidade_id": 10,
+      "codigo": 45515874,
+      "apelido": "Bom Jardim"
+    },
+    {
+      "id": 104,
+      "nome": "Loteamento Terra Nova",
+      "cidade_id": 2,
+      "codigo": 56206158,
+      "apelido": "Loteamento Terra Nova"
+    },
+    {
+      "id": 105,
+      "nome": "Jardim Petrópolis",
+      "cidade_id": 10,
+      "codigo": 47226305,
+      "apelido": "Jardim Petrópolis"
+    },
+    {
+      "id": 107,
+      "nome": "Jardim Tropical",
+      "cidade_id": 12,
+      "codigo": 30417095,
+      "apelido": "Jardim Tropical"
+    },
+    {
+      "id": 108,
+      "nome": "Mário Duílio Henry",
+      "cidade_id": 12,
+      "codigo": 30587090,
+      "apelido": "Mário Duílio Henry"
+    },
+    {
+      "id": 109,
+      "nome": "Vitória Régia",
+      "cidade_id": 2,
+      "codigo": 56926128,
+      "apelido": "Vitória Régia"
+    },
+    {
+      "id": 110,
+      "nome": "Núcleo Urbano de Castanheira - Centro",
+      "cidade_id": 13,
+      "codigo": 11378609,
+      "apelido": "Núcleo Urbano de Castanheira - Centro"
+    },
+    {
+      "id": 111,
+      "nome": "Loteamento Noga II",
+      "cidade_id": 13,
+      "codigo": 11378611,
+      "apelido": "Loteamento Noga II"
+    },
+    {
+      "id": 106,
+      "nome": "Jardim Ouro Verde",
+      "cidade_id": 8,
+      "codigo": 47707277,
+      "apelido": "Jardim Ouro Verde"
+    },
+    {
+      "id": 118,
+      "nome": "Loteamento Padre Duílio",
+      "cidade_id": 15,
+      "codigo": 14518769,
+      "apelido": "Loteamento Padre Duílio"
+    },
+    {
+      "id": 119,
+      "nome": "Jardim Boa Esperança",
+      "cidade_id": 11,
+      "codigo": 47317039,
+      "apelido": "Jardim Boa Esperança"
+    },
+    {
+      "id": 120,
+      "nome": "Loteamento Jardim Boa Esperança II",
+      "cidade_id": 11,
+      "codigo": 47307045,
+      "apelido": "Jardim Boa Esperança II"
+    },
+    {
+      "id": 103,
+      "nome": "Loteamento Jardim Alvorecer",
+      "cidade_id": 11,
+      "codigo": 47377044,
+      "apelido": "Loteamento Jardim Alvorecer"
+    },
+    {
+      "id": 121,
+      "nome": "Marechal Rondon - Fase I",
+      "cidade_id": 7,
+      "codigo": 33028035,
+      "apelido": "Marechal Rondon - Fase I"
+    },
+    {
+      "id": 122,
+      "nome": "Marechal Rondon - Fase II",
+      "cidade_id": 7,
+      "codigo": 32958040,
+      "apelido": "Marechal Rondon - Fase II"
+    },
+    {
+      "id": 123,
+      "nome": "Loteamento 15 de Maio",
+      "cidade_id": 2,
+      "codigo": 57016133,
+      "apelido": "Loteamento 15 de Maio"
+    },
+    {
+      "id": 124,
+      "nome": "Loteamento Parque Sabiá I",
+      "cidade_id": 2,
+      "codigo": 56726186,
+      "apelido": "Loteamento Parque Sabiá I"
+    },
+    {
+      "id": 125,
+      "nome": "Loteamento Portal do Sol",
+      "cidade_id": 15,
+      "codigo": 14108750,
+      "apelido": "Loteamento Portal do Sol"
+    },
+    {
+      "id": 127,
+      "nome": "Jardim Planalto",
+      "cidade_id": 20,
+      "codigo": 1879437,
+      "apelido": "Jardim Planalto"
+    },
+    {
+      "id": 128,
+      "nome": "Jardim Maringá I",
+      "cidade_id": 2,
+      "codigo": 56696082,
+      "apelido": "Jardim Maringá I"
+    },
+    {
+      "id": 129,
+      "nome": "Jardim Maringá II",
+      "cidade_id": 2,
+      "codigo": 56606090,
+      "apelido": "Jardim Maringá II"
+    },
+    {
+      "id": 131,
+      "nome": "Loteamento Cooperativa",
+      "cidade_id": 22,
+      "codigo": 90348569,
+      "apelido": "Loteamento Cooperativa"
+    },
+    {
+      "id": 132,
+      "nome": "Joaquim da Silva",
+      "cidade_id": 23,
+      "codigo": 44516796,
+      "apelido": "Joaquim da Silva"
+    },
+    {
+      "id": 133,
+      "nome": "Tapirapuã",
+      "cidade_id": 23,
+      "codigo": 44466795,
+      "apelido": "Tapirapuã"
+    },
+    {
+      "id": 116,
+      "nome": "Novo Horizonte - Correção",
+      "cidade_id": 14,
+      "codigo": 144506800,
+      "apelido": "Novo Horizonte - Correção"
+    },
+    {
+      "id": 117,
+      "nome": "Tapirapuã - Correção",
+      "cidade_id": 14,
+      "codigo": 144456796,
+      "apelido": "Tapirapuã - Correção"
+    },
+    {
+      "id": 148,
+      "nome": "Zona Central",
+      "cidade_id": 26,
+      "codigo": 3378503,
+      "apelido": "Zona Central"
+    },
+    {
+      "id": 143,
+      "nome": "Loteamento Industrial I - 1ª Parte",
+      "cidade_id": 2,
+      "codigo": 56346161,
+      "apelido": "Loteamento Industrial I - 1ª Parte"
+    },
+    {
+      "id": 144,
+      "nome": "Loteamento Industrial I - 2ª Parte",
+      "cidade_id": 2,
+      "codigo": 56316160,
+      "apelido": "Loteamento Industrial I - 2ª Parte"
+    },
+    {
+      "id": 145,
+      "nome": "Loteamento Industrial II",
+      "cidade_id": 2,
+      "codigo": 56306165,
+      "apelido": "Loteamento Industrial II"
+    },
+    {
+      "id": 146,
+      "nome": "Loteamento Industrial III",
+      "cidade_id": 2,
+      "codigo": 56286169,
+      "apelido": "Loteamento Industrial III"
+    },
+    {
+      "id": 147,
+      "nome": "Primavera",
+      "cidade_id": 26,
+      "codigo": 3288500,
+      "apelido": "Primavera"
+    },
+    {
+      "id": 112,
+      "nome": "Bandeirantes - Correção",
+      "cidade_id": 14,
+      "codigo": 144516800,
+      "apelido": "Bandeirantes - Correção"
+    },
+    {
+      "id": 113,
+      "nome": "Centro - Correção",
+      "cidade_id": 14,
+      "codigo": 144526801,
+      "apelido": "Centro - Correção"
+    },
+    {
+      "id": 114,
+      "nome": "Da Ponte - Correção",
+      "cidade_id": 14,
+      "codigo": 144506812,
+      "apelido": "Da Ponte - Correção"
+    },
+    {
+      "id": 115,
+      "nome": "Joaquim da Silva - Correção",
+      "cidade_id": 14,
+      "codigo": 144526795,
+      "apelido": "Joaquim da Silva - Correção"
+    },
+    {
+      "id": 134,
+      "nome": "Novo Horizonte",
+      "cidade_id": 23,
+      "codigo": 44506800,
+      "apelido": "Novo Horizonte"
+    },
+    {
+      "id": 135,
+      "nome": "Bandeirantes",
+      "cidade_id": 23,
+      "codigo": 44596806,
+      "apelido": "Bandeirantes"
+    },
+    {
+      "id": 136,
+      "nome": "Centro",
+      "cidade_id": 23,
+      "codigo": 44556805,
+      "apelido": "Centro"
+    },
+    {
+      "id": 137,
+      "nome": "Santo Antônio",
+      "cidade_id": 23,
+      "codigo": 44476797,
+      "apelido": "Santo Antônio"
+    },
+    {
+      "id": 138,
+      "nome": "Bairro Da Ponte",
+      "cidade_id": 23,
+      "codigo": 44466812,
+      "apelido": "Bairro Da Ponte"
+    },
+    {
+      "id": 139,
+      "nome": "Núcleo Habitacional Parecis",
+      "cidade_id": 24,
+      "codigo": 44646843,
+      "apelido": "Núcleo Habitacional Parecis"
+    },
+    {
+      "id": 140,
+      "nome": "Conjunto Habitacional Tapirapuã",
+      "cidade_id": 24,
+      "codigo": 44676840,
+      "apelido": "Conjunto Habitacional Tapirapuã"
+    },
+    {
+      "id": 141,
+      "nome": "Bela Vista",
+      "cidade_id": 25,
+      "codigo": 45439206,
+      "apelido": "Bela Vista"
+    },
+    {
+      "id": 149,
+      "nome": "Castelo dos Sonhos",
+      "cidade_id": 25,
+      "codigo": 44389228,
+      "apelido": "Castelo dos Sonhos"
+    },
+    {
+      "id": 151,
+      "nome": "Núcleo Habitacional Frei Salvador Rouquet",
+      "cidade_id": 27,
+      "codigo": 57726352,
+      "apelido": "Núcleo Habitacional Frei Salvador Rouquet"
+    },
+    {
+      "id": 150,
+      "nome": "Residencial Edite Maria de Campos",
+      "cidade_id": 27,
+      "codigo": 57826340,
+      "apelido": "Residencial Edite Maria de Campos"
+    },
+    {
+      "id": 152,
+      "nome": "Loteamento Serra Dourada",
+      "cidade_id": 2,
+      "codigo": 56236147,
+      "apelido": "Loteamento Serra Dourada"
+    },
+    {
+      "id": 153,
+      "nome": "Distrito de Terra Roxa",
+      "cidade_id": 15,
+      "codigo": 14519143,
+      "apelido": "Distrito de Terra Roxa"
+    },
+    {
+      "id": 154,
+      "nome": "Residencial San Diego II",
+      "cidade_id": 3,
+      "codigo": 46427520,
+      "apelido": "Residencial San Diego II"
+    },
+    {
+      "id": 155,
+      "nome": "Residencial San Diego",
+      "cidade_id": 3,
+      "codigo": 46427518,
+      "apelido": "Residencial San Diego"
+    },
+    {
+      "id": 156,
+      "nome": "Loteamento Monte Líbano",
+      "cidade_id": 3,
+      "codigo": 46377514,
+      "apelido": "Loteamento Monte Líbano"
+    },
+    {
+      "id": 157,
+      "nome": "Cidade Alta V",
+      "cidade_id": 3,
+      "codigo": 46387508,
+      "apelido": "Cidade Alta V"
+    },
+    {
+      "id": 158,
+      "nome": "Cidade Alta III",
+      "cidade_id": 3,
+      "codigo": 46377507,
+      "apelido": "Cidade Alta III"
+    },
+    {
+      "id": 159,
+      "nome": "Cidade Alta II",
+      "cidade_id": 3,
+      "codigo": 46357500,
+      "apelido": "Cidade Alta II"
+    },
+    {
+      "id": 160,
+      "nome": "Loteamento Cidade Alta",
+      "cidade_id": 26,
+      "codigo": 3388508,
+      "apelido": "Loteamento Cidade Alta"
+    },
+    {
+      "id": 161,
+      "nome": "Vila Operária",
+      "cidade_id": 20,
+      "codigo": 1809451,
+      "apelido": "Vila Operária"
+    },
+    {
+      "id": 162,
+      "nome": "Cidade Alta",
+      "cidade_id": 25,
+      "codigo": 45159206,
+      "apelido": "Cidade Alta"
+    },
+    {
+      "id": 163,
+      "nome": "Núcleo Urbano de Nova Brasilândia - Recanto dos Pássaros",
+      "cidade_id": 28,
+      "codigo": 49364975,
+      "apelido": "Núcleo Urbano de Nova Brasilândia - Recanto dos Pássaros"
+    },
+    {
+      "id": 164,
+      "nome": "Núcleo Urbano de Nova Brasilândia - Jardim da Paz",
+      "cidade_id": 28,
+      "codigo": 49274976,
+      "apelido": "Núcleo Urbano de Nova Brasilândia - Jardim da Paz"
+    },
+    {
+      "id": 165,
+      "nome": "Núcleo Urbano de Nova Brasilândia - Ipiranga",
+      "cidade_id": 28,
+      "codigo": 49344971,
+      "apelido": "Núcleo Urbano de Nova Brasilândia - Ipiranga"
+    },
+    {
+      "id": 166,
+      "nome": "Núcleo Urbano de Nova Brasilândia - Centro",
+      "cidade_id": 28,
+      "codigo": 49264973,
+      "apelido": "Núcleo Urbano de Nova Brasilândia - Centro"
+    },
+    {
+      "id": 167,
+      "nome": "Núcleo Urbano de Nova Brasilândia - Alvorada",
+      "cidade_id": 28,
+      "codigo": 49314972,
+      "apelido": "Núcleo Urbano de Nova Brasilândia - Alvorada"
+    },
+    {
+      "id": 168,
+      "nome": "Distrito Nossa Senhora da Guia",
+      "cidade_id": 1,
+      "codigo": 53556231,
+      "apelido": "Distrito Nossa Senhora da Guia"
+    },
+    {
+      "id": 169,
+      "nome": "Loteamento 8 de Abril",
+      "cidade_id": 1,
+      "codigo": 55836053,
+      "apelido": "Loteamento 8 de Abril"
+    },
+    {
+      "id": 170,
+      "nome": "Centro",
+      "cidade_id": 29,
+      "codigo": 53337202,
+      "apelido": "Centro"
+    },
+    {
+      "id": 171,
+      "nome": "Santa Isabel",
+      "cidade_id": 29,
+      "codigo": 53357203,
+      "apelido": "Santa Isabel"
+    },
+    {
+      "id": 172,
+      "nome": "Vila da Mangueira",
+      "cidade_id": 29,
+      "codigo": 53317209,
+      "apelido": "Vila da Mangueira"
+    },
+    {
+      "id": 173,
+      "nome": "São José Operário",
+      "cidade_id": 15,
+      "codigo": 14158747,
+      "apelido": "São José Operário"
+    },
+    {
+      "id": 174,
+      "nome": "Loteamento Bela Vista",
+      "cidade_id": 30,
+      "codigo": 45126496,
+      "apelido": "Loteamento Bela Vista"
+    },
+    {
+      "id": 175,
+      "nome": "Distrito Capão Verde",
+      "cidade_id": 30,
+      "codigo": 49306845,
+      "apelido": "Distrito Capão Verde"
+    },
+    {
+      "id": 176,
+      "nome": "Distrito Tira Sentido",
+      "cidade_id": 30,
+      "codigo": 48346812,
+      "apelido": "Distrito Tira Sentido"
+    },
+    {
+      "id": 177,
+      "nome": "Novo Tempo",
+      "cidade_id": 1,
+      "codigo": 55676125,
+      "apelido": "Novo Tempo"
+    },
+    {
+      "id": 178,
+      "nome": "Jardim Santa Izabel",
+      "cidade_id": 1,
+      "codigo": 55996137,
+      "apelido": "Jardim Santa Izabel"
+    },
+    {
+      "id": 179,
+      "nome": "Jardim Alvorada - Quarta Feira",
+      "cidade_id": 1,
+      "codigo": 55786081,
+      "apelido": "Jardim Alvorada - Quarta Feira"
+    },
+    {
+      "id": 180,
+      "nome": "Jardim Alvorada - Loteamento Jardim Fernandes",
+      "cidade_id": 1,
+      "codigo": 55766084,
+      "apelido": "Jardim Alvorada - Loteamento Jardim Fernandes"
+    },
+    {
+      "id": 181,
+      "nome": "Jardim Alvorada - Loteamento Quintandinha",
+      "cidade_id": 1,
+      "codigo": 55806081,
+      "apelido": "Jardim Alvorada - Loteamento Quintandinha"
+    },
+    {
+      "id": 182,
+      "nome": "Jardim Alvorada - Loteamento Senhor dos Passos I",
+      "cidade_id": 1,
+      "codigo": 55786084,
+      "apelido": "Jardim Alvorada - Loteamento Senhor dos Passos I"
+    },
+    {
+      "id": 183,
+      "nome": "Jardim Alvorada - Loteamento Senhor dos Passos II",
+      "cidade_id": 1,
+      "codigo": 55806082,
+      "apelido": "Jardim Alvorada - Loteamento Senhor dos Passos II"
+    },
+    {
+      "id": 184,
+      "nome": "Jardim Alvorada - Loteamento Senhor dos Passos IV",
+      "cidade_id": 1,
+      "codigo": 55746085,
+      "apelido": "Jardim Alvorada - Loteamento Senhor dos Passos IV"
+    },
+    {
+      "id": 185,
+      "nome": "Chácara dos Pinheiros",
+      "cidade_id": 1,
+      "codigo": 56216049,
+      "apelido": "Chácara dos Pinheiros"
+    },
+    {
+      "id": 186,
+      "nome": "Altos da Chapada",
+      "cidade_id": 31,
+      "codigo": 54375735,
+      "apelido": "Altos da Chapada"
+    },
+    {
+      "id": 187,
+      "nome": "Pôr do Sol",
+      "cidade_id": 31,
+      "codigo": 54335778,
+      "apelido": "Pôr do Sol"
+    },
+    {
+      "id": 188,
+      "nome": "Loteamento Boa Esperança",
+      "cidade_id": 15,
+      "codigo": 14228778,
+      "apelido": "Loteamento Boa Esperança"
+    },
+    {
+      "id": 189,
+      "nome": "Loteamento Andorinha",
+      "cidade_id": 15,
+      "codigo": 14108765,
+      "apelido": "Loteamento Andorinha"
+    },
+    {
+      "id": 191,
+      "nome": "Parque Sabiá II",
+      "cidade_id": 2,
+      "codigo": 56726184,
+      "apelido": "Parque Sabiá II"
+    },
+    {
+      "id": 214,
+      "nome": "Centro",
+      "cidade_id": 25,
+      "codigo": 45429213,
+      "apelido": "Centro"
+    },
+    {
+      "id": 215,
+      "nome": "Bairro Três Barras - Remanescente Área C",
+      "cidade_id": 1,
+      "codigo": 55496027,
+      "apelido": "Bairro Três Barras - Remanescente Área C"
+    },
+    {
+      "id": 190,
+      "nome": "Loteamento Passo do Lago",
+      "cidade_id": 15,
+      "codigo": 14248767,
+      "apelido": "Loteamento Passo do Lago"
+    },
+    {
+      "id": 192,
+      "nome": "Residencial 08 de Março",
+      "cidade_id": 2,
+      "codigo": 56646094,
+      "apelido": "Residencial 08 de Março"
+    },
+    {
+      "id": 193,
+      "nome": "Loteamento São Roque",
+      "cidade_id": 1,
+      "codigo": 55826056,
+      "apelido": "Loteamento São Roque"
+    },
+    {
+      "id": 195,
+      "nome": "Nova Esperança II",
+      "cidade_id": 1,
+      "codigo": 56445969,
+      "apelido": "Nova Esperança II"
+    },
+    {
+      "id": 196,
+      "nome": "Parque Mariana",
+      "cidade_id": 1,
+      "codigo": 56106006,
+      "apelido": "Parque Mariana"
+    },
+    {
+      "id": 197,
+      "nome": "Distrito Fontanillas",
+      "cidade_id": 15,
+      "codigo": 13398338,
+      "apelido": "Distrito Fontanillas"
+    },
+    {
+      "id": 198,
+      "nome": "Setor Industrial",
+      "cidade_id": 13,
+      "codigo": 11408615,
+      "apelido": "Setor Industrial"
+    },
+    {
+      "id": 199,
+      "nome": "Diamante Negro",
+      "cidade_id": 15,
+      "codigo": 14108747,
+      "apelido": "Diamante Negro"
+    },
+    {
+      "id": 200,
+      "nome": "Loteameno Rio Manso - Nossa Senhora Aparecida",
+      "cidade_id": 32,
+      "codigo": 46584786,
+      "apelido": "Loteameno Rio Manso - Nossa Senhora Aparecida"
+    },
+    {
+      "id": 201,
+      "nome": "Loteamento Rio Manso - São Gonçalo",
+      "cidade_id": 32,
+      "codigo": 46614771,
+      "apelido": "Loteamento Rio Manso - São Gonçalo"
+    },
+    {
+      "id": 194,
+      "nome": "Guariba",
+      "cidade_id": 25,
+      "codigo": 24130328,
+      "apelido": "Guariba"
+    },
+    {
+      "id": 202,
+      "nome": "Loteamento Sayonara",
+      "cidade_id": 2,
+      "codigo": 56856141,
+      "apelido": "Loteamento Sayonara"
+    },
+    {
+      "id": 203,
+      "nome": "Jardim de Alá",
+      "cidade_id": 2,
+      "codigo": 56286155,
+      "apelido": "Jardim de Alá"
+    },
+    {
+      "id": 204,
+      "nome": "Distrito de Nova União - Bairro Bela Vista",
+      "cidade_id": 22,
+      "codigo": 36898955,
+      "apelido": "Distrito de Nova União - Bairro Bela Vista"
+    },
+    {
+      "id": 205,
+      "nome": "Distrito de Nova União - Bairro Centro",
+      "cidade_id": 22,
+      "codigo": 36818951,
+      "apelido": "Distrito de Nova União - Bairro Centro"
+    },
+    {
+      "id": 206,
+      "nome": "Distrito de Nova União - Bairro dos Imigrantes",
+      "cidade_id": 22,
+      "codigo": 36568955,
+      "apelido": "Distrito de Nova União - Bairro dos Imigrantes"
+    },
+    {
+      "id": 207,
+      "nome": "Distrito de Nova União - Bairro Fortaleza",
+      "cidade_id": 22,
+      "codigo": 36698949,
+      "apelido": "Distrito de Nova União - Bairro Fortaleza"
+    },
+    {
+      "id": 208,
+      "nome": "Distrito de Nova União - Bairro Industrial",
+      "cidade_id": 22,
+      "codigo": 37178952,
+      "apelido": "Distrito de Nova União - Bairro Industrial"
+    },
+    {
+      "id": 209,
+      "nome": "Distrito de Nova União - Bairro Jardim das Flores",
+      "cidade_id": 22,
+      "codigo": 36788946,
+      "apelido": "Distrito de Nova União - Bairro Jardim das Flores"
+    },
+    {
+      "id": 210,
+      "nome": "Distrito de Nova União - Bairro Jardim Planalto",
+      "cidade_id": 22,
+      "codigo": 35958955,
+      "apelido": "Distrito de Nova União - Bairro Jardim Planalto"
+    },
+    {
+      "id": 211,
+      "nome": "Distrito de Nova União - Bairro Morro das Pedras",
+      "cidade_id": 22,
+      "codigo": 36708951,
+      "apelido": "Distrito de Nova União - Bairro Morro das Pedras"
+    },
+    {
+      "id": 212,
+      "nome": "Flor dos Ipês",
+      "cidade_id": 33,
+      "codigo": 45389540,
+      "apelido": "Flor dos Ipês"
+    },
+    {
+      "id": 213,
+      "nome": "Amoreiras",
+      "cidade_id": 33,
+      "codigo": 45279547,
+      "apelido": "Amoreiras"
+    },
+    {
+      "id": 216,
+      "nome": "Domingos Sávio",
+      "cidade_id": 2,
+      "codigo": 56516100,
+      "apelido": "Domingos Sávio"
+    },
+    {
+      "id": 217,
+      "nome": "Loteamento Núcleo 3",
+      "cidade_id": 2,
+      "codigo": 56436109,
+      "apelido": "Loteamento Núcleo 3"
+    },
+    {
+      "id": 218,
+      "nome": "Governador José Fragelli",
+      "cidade_id": 2,
+      "codigo": 56536103,
+      "apelido": "Governador José Fragelli"
+    },
+    {
+      "id": 219,
+      "nome": "Jardim Manaíra",
+      "cidade_id": 2,
+      "codigo": 56096182,
+      "apelido": "Jardim Manaíra"
+    },
+    {
+      "id": 220,
+      "nome": "Distrito Ouro Verde dos Pioneiros",
+      "cidade_id": 22,
+      "codigo": 648554,
+      "apelido": "Distrito Ouro Verde dos Pioneiros"
+    },
+    {
+      "id": 221,
+      "nome": "Catira",
+      "cidade_id": 30,
+      "codigo": 45096493,
+      "apelido": "Catira"
+    },
+    {
+      "id": 222,
+      "nome": "Campo Verde",
+      "cidade_id": 1,
+      "codigo": 55856060,
+      "apelido": "Campo Verde"
+    },
+    {
+      "id": 223,
+      "nome": "Loteamento Morada do Vento",
+      "cidade_id": 15,
+      "codigo": 14148782,
+      "apelido": "Loteamento Morada do Vento"
+    },
+    {
+      "id": 224,
+      "nome": "Jardim República",
+      "cidade_id": 9,
+      "codigo": 50707202,
+      "apelido": "Jardim República"
+    },
+    {
+      "id": 225,
+      "nome": "Cidade Alta",
+      "cidade_id": 20,
+      "codigo": 1699441,
+      "apelido": "Cidade Alta"
+    },
+    {
+      "id": 226,
+      "nome": "Distrito Adrianópolis",
+      "cidade_id": 34,
+      "codigo": 54489100,
+      "apelido": "Distrito Adrianópolis"
+    },
+    {
+      "id": 227,
+      "nome": "Distrito Máquina Queimada",
+      "cidade_id": 34,
+      "codigo": 52769117,
+      "apelido": "Distrito Máquina Queimada"
+    },
+    {
+      "id": 228,
+      "nome": "Jardim do Vale",
+      "cidade_id": 33,
+      "codigo": 45359542,
+      "apelido": "Jardim do Vale"
+    },
+    {
+      "id": 229,
+      "nome": "Copacabana",
+      "cidade_id": 35,
+      "codigo": 36439777,
+      "apelido": "Copacabana"
+    },
+    {
+      "id": 230,
+      "nome": "Sagrada Família",
+      "cidade_id": 35,
+      "codigo": 36689791,
+      "apelido": "Sagrada Família"
+    },
+    {
+      "id": 231,
+      "nome": "Loteamento Residencial Ana Terezinha Ribeiro",
+      "cidade_id": 36,
+      "codigo": 61865955,
+      "apelido": "Loteamento Residencial Ana Terezinha Ribeiro"
+    },
+    {
+      "id": 232,
+      "nome": "Centro",
+      "cidade_id": 37,
+      "codigo": 50059954,
+      "apelido": "Centro"
+    },
+    {
+      "id": 233,
+      "nome": "Loteamento Cidade Campos de Júlio",
+      "cidade_id": 38,
+      "codigo": 37209256,
+      "apelido": "Loteamento Cidade Campos de Júlio"
+    },
+    {
+      "id": 234,
+      "nome": "Alvorada",
+      "cidade_id": 39,
+      "codigo": 49304971,
+      "apelido": "Alvorada"
+    },
+    {
+      "id": 235,
+      "nome": "Boa Vista",
+      "cidade_id": 39,
+      "codigo": 49244971,
+      "apelido": "Boa Vista"
+    },
+    {
+      "id": 236,
+      "nome": "Cidade Nova",
+      "cidade_id": 39,
+      "codigo": 49224973,
+      "apelido": "Cidade Nova"
+    },
+    {
+      "id": 237,
+      "nome": "Ipiranga",
+      "cidade_id": 39,
+      "codigo": 49334971,
+      "apelido": "Ipiranga"
+    },
+    {
+      "id": 238,
+      "nome": "Cohab Durval Thomas",
+      "cidade_id": 39,
+      "codigo": 49184973,
+      "apelido": "Cohab Durval Thomas"
+    },
+    {
+      "id": 239,
+      "nome": "Distrito de Peresópolis",
+      "cidade_id": 39,
+      "codigo": 47514969,
+      "apelido": "Distrito de Peresópolis"
+    },
+    {
+      "id": 241,
+      "nome": "Novo Paraiso II",
+      "cidade_id": 1,
+      "codigo": 55426062,
+      "apelido": "Novo Paraiso II"
+    },
+    {
+      "id": 242,
+      "nome": "Noroagro",
+      "cidade_id": 35,
+      "codigo": 34270106,
+      "apelido": "Noroagro"
+    },
+    {
+      "id": 243,
+      "nome": "São Francisco",
+      "cidade_id": 35,
+      "codigo": 36469783,
+      "apelido": "São Francisco"
+    },
+    {
+      "id": 244,
+      "nome": "Distrito de João Carro",
+      "cidade_id": 31,
+      "codigo": 50845691,
+      "apelido": "Distrito de João Carro"
+    },
+    {
+      "id": 246,
+      "nome": "Loteamento Aricá Açu",
+      "cidade_id": 1,
+      "codigo": 57436024,
+      "apelido": "Loteamento Aricá Açu"
+    },
+    {
+      "id": 240,
+      "nome": "Sol Nascente",
+      "cidade_id": 40,
+      "codigo": 44729581,
+      "apelido": "Sol Nascente"
+    },
+    {
+      "id": 247,
+      "nome": "Vale do Reginaldo - 1ª Etapa",
+      "cidade_id": 41,
+      "codigo": 65805726,
+      "apelido": "Vale do Reginaldo - 1ª Etapa"
+    },
+    {
+      "id": 248,
+      "nome": "Distrito de São Jorge",
+      "cidade_id": 3,
+      "codigo": 46617942,
+      "apelido": "Distrito de São Jorge"
+    },
+    {
+      "id": 249,
+      "nome": "Distrito de Água Fria",
+      "cidade_id": 31,
+      "codigo": 51845760,
+      "apelido": "Distrito de Água Fria"
+    },
+    {
+      "id": 250,
+      "nome": "Olho D'Água",
+      "cidade_id": 31,
+      "codigo": 54665730,
+      "apelido": "Olho D'Água"
+    },
+    {
+      "id": 251,
+      "nome": "Setor Industrial",
+      "cidade_id": 15,
+      "codigo": 14288751,
+      "apelido": "Setor Industrial"
+    }
+  ]
+}
