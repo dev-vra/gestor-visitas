@@ -109,7 +109,6 @@ export default function UserModal({ userToEdit, onClose }) {
               full_name: formData.full_name,
               role: formData.role,
               email: formData.email,
-              must_change_password: true,
             });
 
           if (profileError) {

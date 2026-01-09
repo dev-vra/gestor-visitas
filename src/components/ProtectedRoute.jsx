@@ -20,13 +20,6 @@ export default function ProtectedRoute({ children }) {
   // Force Password Change Logic
   // If user must change password, and is NOT already on the change page, redirect.
   // Also enable this check only if we have a profile loaded
-  if (
-    profile?.must_change_password &&
-    location.pathname !== "/force-password-change" &&
-    location.pathname !== "/update-password"
-  ) {
-    return <Navigate to="/force-password-change" replace />;
-  }
 
   return children;
 }
