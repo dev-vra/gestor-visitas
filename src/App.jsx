@@ -8,7 +8,7 @@ import Login from "./pages/Login";
 import Dashboard from "./pages/Dashboard";
 import { AuthProvider } from "./contexts/AuthContext";
 import ProtectedRoute from "./components/ProtectedRoute";
-import Visits from "./pages/Visits";
+import Vistorias from "./pages/Vistorias";
 import Users from "./pages/Users";
 import ForcePasswordChange from "./pages/ForcePasswordChange";
 import Profile from "./pages/Profile";
@@ -30,7 +30,7 @@ function App() {
             }
           >
             <Route index element={<Dashboard />} />
-            <Route path="visits" element={<Visits />} />
+            <Route path="vistorias" element={<Vistorias />} />
             <Route path="users" element={<Users />} />
             <Route path="profile" element={<Profile />} />
           </Route>

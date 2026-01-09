@@ -20,7 +20,7 @@ export default function Layout() {
 
   const navigation = [
     { name: "Dashboard", href: "/", icon: LayoutDashboard },
-    { name: "Visitas", href: "/visits", icon: ClipboardList },
+    { name: "Vistorias", href: "/vistorias", icon: ClipboardList },
   ];
 
   if (profile?.role === "gestor") {

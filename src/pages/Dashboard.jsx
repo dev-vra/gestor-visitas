@@ -44,6 +44,7 @@ export default function Dashboard() {
     city: "",
     neighborhood: "",
     agentId: "",
+    status: "",
   });
 
   // Filter Options
@@ -116,6 +117,7 @@ export default function Dashboard() {
       if (filters.neighborhood)
         query = query.eq("neighborhood", filters.neighborhood);
       if (filters.agentId) query = query.eq("agent_id", filters.agentId);
+      if (filters.status) query = query.eq("status", filters.status);
 
       const { data: visits, error } = await query;
 
@@ -127,7 +129,9 @@ export default function Dashboard() {
         (v) => v.status === "Vistoria Finalizada"
       ).length;
       const missed = visits.filter(
-        (v) => v.status === "Vistoria Improdutiva"
+        (v) =>
+          v.status === "Vistoria em aberto" ||
+          v.status === "Vistoria Improdutiva"
       ).length;
 
       setStats({ total, completed, missed });
@@ -205,11 +209,10 @@ export default function Dashboard() {
     if (filters.neighborhood)
       filterText += `Bairro: ${filters.neighborhood} | `;
     if (filters.agentId) {
-      const agentName =
-        options.agents.find((a) => a.id === filters.agentId)?.full_name ||
-        "N/A";
-      filterText += `Agente: ${agentName}`;
+      const agentName = "N/A";
+      filterText += `Agente: ${agentName} | `;
     }
+    if (filters.status) filterText += `Status: ${filters.status}`;
 
     doc.setFontSize(9);
     doc.setTextColor(100);
@@ -219,7 +222,7 @@ export default function Dashboard() {
     doc.setTextColor(0);
     doc.setFontSize(11);
     doc.text(
-      `Resumo: Total: ${stats.total} | Finalizadas: ${stats.completed} | Improdutivas: ${stats.missed}`,
+      `Resumo: Total: ${stats.total} | Finalizadas: ${stats.completed} | Em Aberto: ${stats.missed}`,
       14,
       46
     );
@@ -248,6 +251,7 @@ export default function Dashboard() {
     if (filters.neighborhood)
       query = query.eq("neighborhood", filters.neighborhood);
     if (filters.agentId) query = query.eq("agent_id", filters.agentId);
+    if (filters.status) query = query.eq("status", filters.status);
 
     const { data: visits } = await query;
 
@@ -382,6 +386,22 @@ export default function Dashboard() {
               ))}
             </select>
           </div>
+
+          <div className={styles.filterGroup}>
+            <label>Status</label>
+            <select
+              value={filters.status}
+              onChange={(e) =>
+                setFilters({ ...filters, status: e.target.value })
+              }
+            >
+              <option value="">Todos</option>
+              <option value="Agendar Vistoria">Agendar Vistoria</option>
+              <option value="Vistoria Agendada">Vistoria Agendada</option>
+              <option value="Vistoria Finalizada">Vistoria Finalizada</option>
+              <option value="Vistoria em aberto">Vistoria em aberto</option>
+            </select>
+          </div>
         </div>
       </div>
 
@@ -392,7 +412,7 @@ export default function Dashboard() {
           style={{ borderLeft: "4px solid #3b82f6" }}
         >
           <div className={styles.cardHeader}>
-            <span className="text-gray-400">Total Visitas</span>
+            <span className="text-gray-400">Total Vistorias</span>
             <Calendar className="text-blue-500" />
           </div>
           <p className={styles.cardValue}>{stats.total}</p>
@@ -416,7 +436,7 @@ export default function Dashboard() {
           style={{ borderLeft: "4px solid #ef4444" }}
         >
           <div className={styles.cardHeader}>
-            <span className="text-gray-400">Improdutivas</span>
+            <span className="text-gray-400">Em Aberto</span>
             <AlertCircle className="text-red-500" />
           </div>
           <p className={styles.cardValue}>{stats.missed}</p>
@@ -427,7 +447,7 @@ export default function Dashboard() {
       <div className={styles.chartsGrid}>
         {/* Pie Chart */}
         <div className={`${styles.chartCard} glass-panel`}>
-          <h3>Status das Visitas</h3>
+          <h3>Status das Vistorias</h3>
           <div className={styles.chartContainer}>
             <ResponsiveContainer width="100%" height="100%">
               <PieChart>
@@ -463,7 +483,7 @@ export default function Dashboard() {
 
         {/* Bar Chart */}
         <div className={`${styles.chartCard} glass-panel`}>
-          <h3>Visitas por Agente</h3>
+          <h3>Vistorias por Agente</h3>
           <div className={styles.chartContainer}>
             <ResponsiveContainer width="100%" height="100%">
               <BarChart data={agentData}>
