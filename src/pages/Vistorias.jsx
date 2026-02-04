@@ -33,7 +33,7 @@ export default function Vistorias() {
       visits
         .filter((v) => !selectedCity || v.city === selectedCity)
         .map((v) => v.neighborhood)
-        .filter(Boolean)
+        .filter(Boolean),
     ),
   ].sort((a, b) => a.localeCompare(b));
 
@@ -49,7 +49,7 @@ export default function Vistorias() {
         `
         *,
         profiles:agent_id (full_name)
-      `
+      `,
       )
       .order("created_at", { ascending: false });
 
@@ -101,7 +101,7 @@ export default function Vistorias() {
       Quadra: v.address_block,
       Lote: v.address_lot,
       Status: v.status,
-      Agente: v.profiles?.full_name || "-",
+      Observação: v.observations || "-",
       "Data Prevista": v.date_predicted
         ? format(new Date(v.date_predicted), "dd/MM/yyyy")
         : "-",
@@ -138,7 +138,7 @@ export default function Vistorias() {
           "Quadra",
           "Lote",
           "Status",
-          "Agente",
+          "Observação",
           "Data Prevista",
           "Realizado",
         ];

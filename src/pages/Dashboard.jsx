@@ -126,12 +126,12 @@ export default function Dashboard() {
       // Calculate Stats
       const total = visits.length;
       const completed = visits.filter(
-        (v) => v.status === "Vistoria Finalizada"
+        (v) => v.status === "Vistoria Finalizada",
       ).length;
       const missed = visits.filter(
         (v) =>
           v.status === "Vistoria em aberto" ||
-          v.status === "Vistoria Improdutiva"
+          v.status === "Vistoria Improdutiva",
       ).length;
 
       setStats({ total, completed, missed });
@@ -168,7 +168,7 @@ export default function Dashboard() {
   };
 
   const handleExportPDF = () => {
-    const doc = new jsPDF();
+    const doc = new jsPDF({ orientation: "landscape" });
 
     // Header
     // Note: Assuming logo loads, otherwise it might be blank.
@@ -193,7 +193,7 @@ export default function Dashboard() {
       `Gerado em: ${new Date().toLocaleDateString()} às ${new Date().toLocaleTimeString()}`,
       pageWidth / 2,
       26,
-      { align: "center" }
+      { align: "center" },
     );
 
     // Filters Header
@@ -224,7 +224,7 @@ export default function Dashboard() {
     doc.text(
       `Resumo: Total: ${stats.total} | Finalizadas: ${stats.completed} | Em Aberto: ${stats.missed}`,
       14,
-      46
+      46,
     );
 
     // Table
@@ -242,7 +242,7 @@ export default function Dashboard() {
     // Re-run query to get data for table
     let query = supabase.from("visits").select(`
         created_at, date_effective, status, city, neighborhood, address_block, address_lot,
-        profiles:agent_id(full_name)
+        name, phone1, phone2, observations, date_predicted
       `);
     if (filters.startDate)
       query = query.gte("date_effective", filters.startDate);
@@ -256,21 +256,56 @@ export default function Dashboard() {
     const { data: visits } = await query;
 
     const tableData = visits.map((v) => [
-      v.date_effective ? format(new Date(v.date_effective), "dd/MM/yyyy") : "-",
       v.city,
       v.neighborhood,
+      v.name,
+      `${v.phone1 || "-"}\n${v.phone2 || ""}`,
       `Q: ${v.address_block} L: ${v.address_lot}`,
       v.status,
-      v.profiles?.full_name || "-",
+      v.observations || "-",
+      v.date_predicted ? format(new Date(v.date_predicted), "dd/MM/yyyy") : "-",
     ]);
 
     doc.autoTable({
       startY: 55,
-      head: [["Data", "Cidade", "Bairro", "Endereço", "Status", "Agente"]],
+      head: [
+        [
+          "Cidade",
+          "Bairro",
+          "Nome",
+          "Contatos",
+          "Endereço",
+          "Status",
+          "Observação",
+          "Previsto",
+        ],
+      ],
       body: tableData,
       theme: "grid",
       headStyles: { fillColor: [79, 70, 229] },
-      styles: { fontSize: 8 },
+      styles: { fontSize: 8, overflow: "linebreak" },
+      columnStyles: {
+        0: { cellWidth: 25 }, // Cidade
+        1: { cellWidth: 25 }, // Bairro
+        2: { cellWidth: 35 }, // Nome
+        3: { cellWidth: 30 }, // Contatos
+        4: { cellWidth: 25 }, // Endereço
+        5: { cellWidth: 25 }, // Status
+        6: { cellWidth: 50 }, // Observação (Wider)
+        7: { cellWidth: 20 }, // Previsto
+      },
+      didDrawPage: (data) => {
+        // Footer (optional)
+        const pageSize = doc.internal.pageSize;
+        const pageHeight = pageSize.height
+          ? pageSize.height
+          : pageSize.getHeight();
+        doc.text(
+          `Página ${data.pageNumber}`,
+          data.settings.margin.left,
+          pageHeight - 10,
+        );
+      },
     });
 
     doc.save("relatorio_vistorias.pdf");
