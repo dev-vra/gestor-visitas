@@ -126,12 +126,16 @@ export default function Dashboard() {
       // Calculate Stats
       const total = visits.length;
       const completed = visits.filter(
-        (v) => v.status === "Vistoria Finalizada",
+        (v) =>
+          v.status === "Vistoria Finalizada" ||
+          v.status === "Vistoria realizada com sucesso",
       ).length;
       const missed = visits.filter(
         (v) =>
           v.status === "Vistoria em aberto" ||
-          v.status === "Vistoria Improdutiva",
+          v.status === "Vistoria Improdutiva" ||
+          v.status === "Vistoria realizada sem sucesso" ||
+          v.status === "Vistoria realizada (aguardando alterações)",
       ).length;
 
       setStats({ total, completed, missed });
@@ -242,6 +246,7 @@ export default function Dashboard() {
     // Re-run query to get data for table
     let query = supabase.from("visits").select(`
         created_at, date_effective, status, city, neighborhood, address_block, address_lot,
+        address_street, address_number,
         name, phone1, phone2, observations, date_predicted
       `);
     if (filters.startDate)
@@ -260,7 +265,7 @@ export default function Dashboard() {
       v.neighborhood,
       v.name,
       `${v.phone1 || "-"}\n${v.phone2 || ""}`,
-      `Q: ${v.address_block} L: ${v.address_lot}`,
+      `${v.address_street || "-"}${v.address_number ? `, Nº ${v.address_number}` : ""} - Q: ${v.address_block} L: ${v.address_lot}`,
       v.status,
       v.observations || "-",
       v.date_predicted ? format(new Date(v.date_predicted), "dd/MM/yyyy") : "-",
@@ -289,7 +294,7 @@ export default function Dashboard() {
         1: { cellWidth: 25 }, // Bairro
         2: { cellWidth: 35 }, // Nome
         3: { cellWidth: 30 }, // Contatos
-        4: { cellWidth: 25 }, // Endereço
+        4: { cellWidth: 35 }, // Endereço (Slightly wider)
         5: { cellWidth: 25 }, // Status
         6: { cellWidth: 50 }, // Observação (Wider)
         7: { cellWidth: 20 }, // Previsto
@@ -431,10 +436,16 @@ export default function Dashboard() {
               }
             >
               <option value="">Todos</option>
-              <option value="Agendar Vistoria">Agendar Vistoria</option>
               <option value="Vistoria Agendada">Vistoria Agendada</option>
-              <option value="Vistoria Finalizada">Vistoria Finalizada</option>
-              <option value="Vistoria em aberto">Vistoria em aberto</option>
+              <option value="Vistoria realizada com sucesso">
+                Vistoria realizada com sucesso
+              </option>
+              <option value="Vistoria realizada sem sucesso">
+                Vistoria realizada sem sucesso
+              </option>
+              <option value="Vistoria realizada (aguardando alterações)">
+                Vistoria realizada (aguardando alterações)
+              </option>
             </select>
           </div>
         </div>

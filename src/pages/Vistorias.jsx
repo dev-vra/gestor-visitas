@@ -2,13 +2,11 @@ import { useState, useEffect } from "react";
 import { supabase } from "../lib/supabase";
 import { useAuth } from "../contexts/AuthContext";
 import styles from "../styles/Vistorias.module.css";
-import { Search, Plus, Filter, Loader2 } from "lucide-react";
+import { Search, Plus, Filter, Loader2, MapPin, FileDown, Bot } from "lucide-react";
 import VistoriaModal from "../components/VistoriaModal";
-import cidadesData from "../data/cidades.json";
-import bairrosData from "../data/bairros.json";
+import LocationLink from "../components/LocationLink";
 import { format } from "date-fns";
 import * as XLSX from "xlsx";
-import { FileDown } from "lucide-react";
 
 export default function Vistorias() {
   const { profile } = useAuth();
@@ -23,7 +21,7 @@ export default function Vistorias() {
   const [selectedNeighborhood, setSelectedNeighborhood] = useState("");
   const [selectedStatus, setSelectedStatus] = useState("");
 
-  // Derived options for filters (only show data present in visits)
+  // Derived options for filters
   const availableCities = [
     ...new Set(visits.map((v) => v.city).filter(Boolean)),
   ].sort((a, b) => a.localeCompare(b));
@@ -45,16 +43,11 @@ export default function Vistorias() {
     setLoading(true);
     let query = supabase
       .from("visits")
-      .select(
-        `
+      .select(`
         *,
         profiles:agent_id (full_name)
-      `,
-      )
+      `)
       .order("created_at", { ascending: false });
-
-    // Apply role-based filtering if needed (e.g. Agent only sees theirs? Requirement says Agent sees list, maybe all?)
-    // Assuming Agent can see all for now as per "Usuário acessa a aplicação, ela exibe lista com os registro das visitas."
 
     const { data, error } = await query;
     if (error) console.error(error);
@@ -87,11 +80,10 @@ export default function Vistorias() {
   const handleModalClose = () => {
     setIsModalOpen(false);
     setSelectedVisit(null);
-    fetchVisits(); // Refresh list
+    fetchVisits();
   };
 
   const handleExportExcel = () => {
-    // 1. Prepare Data
     const dataToExport = filteredVisits.map((v) => ({
       Cidade: v.city,
       Bairro: v.neighborhood,
@@ -100,81 +92,76 @@ export default function Vistorias() {
       Telefone2: v.phone2,
       Quadra: v.address_block,
       Lote: v.address_lot,
+      Rua: v.address_street || "-",
+      Número: v.address_number || "-",
       Status: v.status,
       Observação: v.observations || "-",
       "Data Prevista": v.date_predicted
         ? format(new Date(v.date_predicted), "dd/MM/yyyy")
         : "-",
-      Realizado: "", // Checkbox column (empty for print)
+      Realizado: "",
     }));
-
-    // 2. Create Sheet
-    const ws = XLSX.utils.json_to_sheet(dataToExport);
-
-    // 3. Add Filter Info Header (Hack: Insert at top)
-    // We'll use a separate array to handle headers nicely if needed,
-    // but standard json_to_sheet creates headers from keys.
-    // To add "Meta-headers" like filters, we usually write them first or handle manually.
-    // Simple approach: Create workbook, append sheet.
-    // Enhanced approach for "Filter text header":
-    // It's tricky with simple JSON export. Let's append rows manually or just stick to data.
-    // User asked for "Cabeçalho com os valores dos filtro e data de impressão".
-    // We can manually construct the worksheet array arrays.
 
     const filterText = `Filtros: Cidade: ${selectedCity || "Todas"} | Bairro: ${
       selectedNeighborhood || "Todos"
     } | Status: ${selectedStatus || "Todos"} | Busca: ${searchTerm || "-"}`;
     const printDate = `Gerado em: ${new Date().toLocaleString()}`;
 
-    // Convert data to array of arrays
-    const headers = Object.keys(dataToExport[0] || {}).length
-      ? Object.keys(dataToExport[0])
-      : [
-          "Cidade",
-          "Bairro",
-          "Nome",
-          "Celular",
-          "Telefone2",
-          "Quadra",
-          "Lote",
-          "Status",
-          "Observação",
-          "Data Prevista",
-          "Realizado",
-        ];
-    const body = dataToExport.map((row) => Object.values(row));
+    const headers = [
+      "Cidade",
+      "Bairro",
+      "Nome",
+      "Celular",
+      "Telefone2",
+      "Quadra",
+      "Lote",
+      "Rua",
+      "Número",
+      "Status",
+      "Observação",
+      "Data Prevista",
+      "Realizado",
+    ];
+    const body = dataToExport.map((row) => [
+      row.Cidade,
+      row.Bairro,
+      row.Nome,
+      row.Celular,
+      row.Telefone2,
+      row.Quadra,
+      row.Lote,
+      row.Rua,
+      row.Número,
+      row.Status,
+      row.Observação,
+      row["Data Prevista"],
+      row.Realizado,
+    ]);
 
     const finalData = [
       [filterText],
       [printDate],
-      [], // Empty row
+      [],
       headers,
       ...body,
     ];
 
-    const wsWithHeader = XLSX.utils.aoa_to_sheet(finalData);
-
-    // 4. Workbook
+    const ws = XLSX.utils.aoa_to_sheet(finalData);
     const wb = XLSX.utils.book_new();
-    XLSX.utils.book_append_sheet(wb, wsWithHeader, "Vistorias");
-
-    // 5. Download
+    XLSX.utils.book_append_sheet(wb, ws, "Vistorias");
     XLSX.writeFile(wb, "vistorias.xlsx");
   };
 
   const getStatusColor = (status) => {
     switch (status) {
-      case "Vistoria Finalizada":
+      case "Vistoria realizada com sucesso":
         return "var(--status-completed)";
-      case "Vistoria Improdutiva":
-        return "var(--status-missed)";
-      case "Vistoria em aberto":
+      case "Vistoria realizada sem sucesso":
         return "var(--status-missed)";
       case "Vistoria Agendada":
         return "var(--status-scheduled)";
+      case "Vistoria realizada (aguardando alterações)":
       case "Agendar Vistoria":
-        return "var(--status-pending)";
-      case "Agendamento": // Legacy
         return "var(--status-pending)";
       default:
         return "var(--status-pending)";
@@ -183,7 +170,6 @@ export default function Vistorias() {
 
   return (
     <div className={styles.container}>
-      {/* Header & Actions */}
       <div className={styles.header}>
         <div>
           <h1 className={styles.title}>Vistorias</h1>
@@ -206,7 +192,6 @@ export default function Vistorias() {
         </div>
       </div>
 
-      {/* Filters */}
       <div className={`glass-panel ${styles.filters}`}>
         <div className={styles.searchBox}>
           <Search size={18} className="text-gray-400" />
@@ -250,14 +235,19 @@ export default function Vistorias() {
           onChange={(e) => setSelectedStatus(e.target.value)}
         >
           <option value="">Todos os Status</option>
-          <option value="Agendar Vistoria">Agendar Vistoria</option>
           <option value="Vistoria Agendada">Vistoria Agendada</option>
-          <option value="Vistoria Finalizada">Vistoria Finalizada</option>
-          <option value="Vistoria em aberto">Vistoria em aberto</option>
+          <option value="Vistoria realizada com sucesso">
+            Vistoria realizada com sucesso
+          </option>
+          <option value="Vistoria realizada sem sucesso">
+            Vistoria realizada sem sucesso
+          </option>
+          <option value="Vistoria realizada (aguardando alterações)">
+            Vistoria realizada (aguardando alterações)
+          </option>
         </select>
       </div>
 
-      {/* Table */}
       <div className={`glass-panel ${styles.tableContainer}`}>
         {loading ? (
           <div className="flex justify-center p-8">
@@ -267,11 +257,11 @@ export default function Vistorias() {
           <table className={styles.table}>
             <thead>
               <tr>
-                <th>Nome</th>
-                <th>Cidade</th>
-                <th>Bairro</th>
-                <th>Quadra</th>
-                <th>Lote</th>
+                <th>Contribuinte</th>
+                <th>Endereço</th>
+                <th>Mapa</th>
+                <th>Cidade/Bairro</th>
+                <th>Quadra / Lote</th>
                 <th>Contato</th>
                 <th>Status</th>
                 <th>Agente</th>
@@ -282,12 +272,36 @@ export default function Vistorias() {
               {filteredVisits.map((visit) => (
                 <tr key={visit.id}>
                   <td>
-                    <div className="font-medium">{visit.name}</div>
+                    <div className="flex items-center gap-2">
+                      <div className="font-medium">{visit.name}</div>
+                      {visit.source === "Bot" && (
+                        <Bot size={16} className="text-blue-400" title="Registrado por Bot IA" />
+                      )}
+                    </div>
+                    <div className="text-xs text-gray-400">{visit.cpf}</div>
                   </td>
-                  <td>{visit.city}</td>
-                  <td>{visit.neighborhood}</td>
-                  <td>{visit.address_block}</td>
-                  <td>{visit.address_lot}</td>
+                  <td>
+                    <div className="text-sm">{visit.address_street || "-"}</div>
+                    <div className="text-xs text-gray-400">
+                      {visit.address_number ? `Nº ${visit.address_number}` : "-"}
+                    </div>
+                  </td>
+                  <td>
+                    {visit.location_url && (
+                      <LocationLink url={visit.location_url} />
+                    )}
+                  </td>
+                  <td>
+                    {visit.city} / {visit.neighborhood}
+                  </td>
+                  <td>
+                    <div className="text-sm">
+                      {visit.address_block && `Q: ${visit.address_block}`}
+                    </div>
+                    <div className="text-xs text-gray-400">
+                      {visit.address_lot && `L: ${visit.address_lot}`}
+                    </div>
+                  </td>
                   <td>
                     <div className="text-sm">{visit.phone1}</div>
                     <div className="text-xs text-gray-400">{visit.phone2}</div>

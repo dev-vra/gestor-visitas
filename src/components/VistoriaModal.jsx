@@ -2,7 +2,8 @@ import { useState, useEffect } from "react";
 import { supabase } from "../lib/supabase";
 import { useAuth } from "../contexts/AuthContext";
 import styles from "../styles/VistoriaModal.module.css";
-import { X, Save, Clock, MessageSquare, FileText, Send } from "lucide-react";
+import { X, Save, Clock, MessageSquare, FileText, Send, MapPin } from "lucide-react";
+import LocationLink from "./LocationLink";
 import cidadesData from "../data/cidades.json";
 import bairrosData from "../data/bairros.json";
 import { format } from "date-fns";
@@ -32,6 +33,9 @@ export default function VistoriaModal({ visit, onClose }) {
     neighborhood: "",
     address_block: "",
     address_lot: "",
+    address_street: "",
+    address_number: "",
+    location_url: "",
     date_predicted: "",
     date_effective: "",
     agent_id: "",
@@ -64,8 +68,11 @@ export default function VistoriaModal({ visit, onClose }) {
         neighborhood: visit.neighborhood || "",
         address_block: visit.address_block || "",
         address_lot: visit.address_lot || "",
-        date_predicted: visit.date_predicted || "",
-        date_effective: visit.date_effective || "",
+        address_street: visit.address_street || "",
+        address_number: visit.address_number || "",
+        location_url: visit.location_url || "",
+        date_predicted: formatDateToDisplay(visit.date_predicted),
+        date_effective: formatDateToDisplay(visit.date_effective),
         agent_id: visit.agent_id || "",
         status: visit.status || "Agendar Vistoria",
         observations: visit.observations || "",
@@ -129,6 +136,33 @@ export default function VistoriaModal({ visit, onClose }) {
     setFormData((prev) => ({ ...prev, [e.target.name]: value }));
   };
 
+  const handleDateMask = (e) => {
+    let value = e.target.value.replace(/\D/g, ""); // Only numbers
+    if (value.length > 8) value = value.slice(0, 8); // Max 8 digits (ddmmaaaa)
+
+    // dd/mm/aaaa
+    if (value.length > 2) value = `${value.slice(0, 2)}/${value.slice(2)}`;
+    if (value.length > 5) value = `${value.slice(0, 5)}/${value.slice(5)}`;
+
+    setFormData((prev) => ({ ...prev, [e.target.name]: value }));
+  };
+
+  const formatDateToISO = (dateStr) => {
+    if (!dateStr || !dateStr.includes("/")) return null;
+    const [day, month, year] = dateStr.split("/");
+    if (!day || !month || !year || year.length !== 4) return null;
+    return `${year}-${month}-${day}`;
+  };
+
+  const formatDateToDisplay = (isoStr) => {
+    if (!isoStr) return "";
+    // Handle both YYYY-MM-DD and full ISO strings
+    const datePart = isoStr.split("T")[0];
+    const [year, month, day] = datePart.split("-");
+    if (!year || !month || !day) return isoStr;
+    return `${day}/${month}/${year}`;
+  };
+
   const saveObservation = async () => {
     if (!newObservation.trim()) return;
     try {
@@ -148,14 +182,40 @@ export default function VistoriaModal({ visit, onClose }) {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    // Custom Validation
+    const requiredFields = [
+      { key: "name", label: "Nome Completo" },
+      { key: "cpf", label: "CPF" },
+      { key: "phone1", label: "Celular (WhatsApp)" },
+      { key: "city", label: "Cidade" },
+      { key: "neighborhood", label: "Bairro" },
+      { key: "address_street", label: "Rua" },
+      { key: "address_number", label: "Número" },
+    ];
+
+    const missingFields = requiredFields
+      .filter((f) => !formData[f.key]?.trim())
+      .map((f) => f.label);
+
+    if (missingFields.length > 0) {
+      alert(
+        "Por favor, preencha os seguintes campos obrigatórios:\n\n" +
+          missingFields.join("\n")
+      );
+      return;
+    }
+
     setLoading(true);
     try {
       // 1. Prepare Data
-      const dataToSave = { ...formData };
-
-      // If null/empty dates, send null to DB
-      if (!dataToSave.date_effective) dataToSave.date_effective = null;
-      if (!dataToSave.date_predicted) dataToSave.date_predicted = null;
+      const dataToSave = {
+        ...formData,
+        date_predicted: formatDateToISO(formData.date_predicted),
+        date_effective: formatDateToISO(formData.date_effective),
+        // Ensure empty strings are sent as null for DB compatibility
+        agent_id: formData.agent_id || null, 
+      };
 
       let result;
       if (isEditing) {
@@ -258,17 +318,20 @@ export default function VistoriaModal({ visit, onClose }) {
                 <h3>Dados do Contribuinte</h3>
                 <div className={styles.row}>
                   <div className={styles.inputGroup}>
-                    <label>Nome Completo</label>
+                    <label>
+                      Nome Completo <span style={{ color: "red" }}>*</span>
+                    </label>
                     <input
                       name="name"
                       value={formData.name}
                       onChange={handleChange}
                       disabled={!canEditDetails}
-                      required
                     />
                   </div>
                   <div className={styles.inputGroup}>
-                    <label>CPF</label>
+                    <label>
+                      CPF <span style={{ color: "red" }}>*</span>
+                    </label>
                     <input
                       name="cpf"
                       value={formData.cpf}
@@ -280,13 +343,14 @@ export default function VistoriaModal({ visit, onClose }) {
                 </div>
                 <div className={styles.row}>
                   <div className={styles.inputGroup}>
-                    <label>Celular (WhatsApp)</label>
+                    <label>
+                      Celular (WhatsApp) <span style={{ color: "red" }}>*</span>
+                    </label>
                     <input
                       name="phone1"
                       value={formData.phone1}
                       onChange={handlePhoneMask}
                       disabled={!canEditDetails}
-                      required
                       placeholder="(XX) 9XXXX-XXXX"
                     />
                   </div>
@@ -306,7 +370,9 @@ export default function VistoriaModal({ visit, onClose }) {
                 <h3>Localização</h3>
                 <div className={styles.row}>
                   <div className={styles.inputGroup}>
-                    <label>Cidade</label>
+                    <label>
+                      Cidade <span style={{ color: "red" }}>*</span>
+                    </label>
                     <select
                       name="city"
                       value={formData.city}
@@ -315,7 +381,6 @@ export default function VistoriaModal({ visit, onClose }) {
                         setFormData((p) => ({ ...p, neighborhood: "" }));
                       }}
                       disabled={!canEditDetails}
-                      required
                     >
                       <option value="">Selecione...</option>
                       {cidadesData.data.map((c) => (
@@ -326,13 +391,14 @@ export default function VistoriaModal({ visit, onClose }) {
                     </select>
                   </div>
                   <div className={styles.inputGroup}>
-                    <label>Bairro</label>
+                    <label>
+                      Bairro <span style={{ color: "red" }}>*</span>
+                    </label>
                     <select
                       name="neighborhood"
                       value={formData.neighborhood}
                       onChange={handleChange}
                       disabled={!canEditDetails || !formData.city}
-                      required
                     >
                       <option value="">Selecione...</option>
                       {availableNeighborhoods.map((b) => (
@@ -363,6 +429,53 @@ export default function VistoriaModal({ visit, onClose }) {
                     />
                   </div>
                 </div>
+                <div className={styles.row}>
+                  <div className={styles.inputGroup}>
+                    <label>
+                      Rua <span style={{ color: "red" }}>*</span>
+                    </label>
+                    <input
+                      name="address_street"
+                      value={formData.address_street}
+                      onChange={handleChange}
+                      disabled={!canEditDetails}
+                      placeholder="Nome da rua"
+                    />
+                  </div>
+                  <div className={styles.inputGroup} style={{ maxWidth: "120px" }}>
+                    <label>
+                      Número <span style={{ color: "red" }}>*</span>
+                    </label>
+                    <input
+                      name="address_number"
+                      value={formData.address_number}
+                      onChange={handleChange}
+                      disabled={!canEditDetails}
+                      placeholder="Ex: 123"
+                    />
+                  </div>
+                </div>
+                <div className={styles.row}>
+                  <div className={styles.inputGroup}>
+                    <label>Link da Localização (Google Maps)</label>
+                    <div style={{ display: 'flex', gap: '0.5rem' }}>
+                      <input
+                        name="location_url"
+                        value={formData.location_url}
+                        onChange={handleChange}
+                        disabled={!canEditDetails}
+                        placeholder="https://maps.google.com/?q=..."
+                        style={{ flex: 1 }}
+                      />
+                      {formData.location_url && (
+                        <LocationLink 
+                          url={formData.location_url} 
+                          className={styles.mapBtn} 
+                        />
+                      )}
+                    </div>
+                  </div>
+                </div>
               </div>
 
               <div className={styles.section}>
@@ -381,11 +494,14 @@ export default function VistoriaModal({ visit, onClose }) {
                       <option value="Vistoria Agendada">
                         Vistoria Agendada
                       </option>
-                      <option value="Vistoria Finalizada">
-                        Vistoria Finalizada
+                      <option value="Vistoria realizada com sucesso">
+                        Vistoria realizada com sucesso
                       </option>
-                      <option value="Vistoria em aberto">
-                        Vistoria em aberto
+                      <option value="Vistoria realizada sem sucesso">
+                        Vistoria realizada sem sucesso
+                      </option>
+                      <option value="Vistoria realizada (aguardando alterações)">
+                        Vistoria realizada (aguardando alterações)
                       </option>
                     </select>
                   </div>
@@ -410,21 +526,23 @@ export default function VistoriaModal({ visit, onClose }) {
                   <div className={styles.inputGroup}>
                     <label>Data Prevista</label>
                     <input
-                      type="date"
+                      type="text"
                       name="date_predicted"
                       value={formData.date_predicted}
-                      onChange={handleChange}
+                      onChange={handleDateMask}
                       disabled={!canEditStatus}
+                      placeholder="dd/mm/aaaa"
                     />
                   </div>
                   <div className={styles.inputGroup}>
                     <label>Data Efetiva</label>
                     <input
-                      type="date"
+                      type="text"
                       name="date_effective"
                       value={formData.date_effective}
-                      onChange={handleChange}
+                      onChange={handleDateMask}
                       disabled={!canEditStatus}
+                      placeholder="dd/mm/aaaa"
                     />
                   </div>
                 </div>
@@ -554,6 +672,8 @@ export default function VistoriaModal({ visit, onClose }) {
                                     neighborhood: "Bairro",
                                     address_block: "Quadra",
                                     address_lot: "Lote",
+                                    address_street: "Rua",
+                                    address_number: "Número",
                                     observations: "Obs (Principal)",
                                     agent_id: "Agente",
                                   }[key] || key;
