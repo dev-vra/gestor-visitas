@@ -17,6 +17,9 @@ export default function UserModal({ userToEdit, onClose }) {
   });
 
   const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
+  const [showAdminSetPassword, setShowAdminSetPassword] = useState(false);
+  const [adminSetPassword, setAdminSetPassword] = useState("");
+  const [confirmAdminSetPassword, setConfirmAdminSetPassword] = useState("");
   const [adminPassword, setAdminPassword] = useState("");
   const { user, profile } = useAuth(); // Current logged in admin
 
@@ -172,6 +175,37 @@ export default function UserModal({ userToEdit, onClose }) {
     }
   };
 
+  const handleAdminUpdatePassword = async () => {
+    if (adminSetPassword !== confirmAdminSetPassword) {
+      alert("As senhas não coincidem!");
+      return;
+    }
+    if (adminSetPassword.length < 6) {
+      alert("A senha deve ter no mínimo 6 caracteres.");
+      return;
+    }
+
+    setLoading(true);
+    try {
+      const { data, error } = await supabase.rpc("admin_update_user_password", {
+        target_user_id: userToEdit.id,
+        new_password: adminSetPassword,
+      });
+
+      if (error) throw error;
+
+      alert("Senha alterada com sucesso!");
+      setShowAdminSetPassword(false);
+      setAdminSetPassword("");
+      setConfirmAdminSetPassword("");
+    } catch (err) {
+      console.error(err);
+      alert("Erro ao alterar senha: " + err.message);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
     <div className={styles.overlay}>
       <div
@@ -212,7 +246,7 @@ export default function UserModal({ userToEdit, onClose }) {
               <div className={styles.inputGroup}>
                 <label>Senha Provisória</label>
                 <input
-                  type="text"
+                  type="password"
                   name="password"
                   value={formData.password}
                   onChange={handleChange}
@@ -236,14 +270,55 @@ export default function UserModal({ userToEdit, onClose }) {
                 <option value="gestor">Gestor</option>
               </select>
             </div>
+
+            {isEditing && showAdminSetPassword && (
+              <div className="mt-4 p-4 rounded-lg bg-yellow-500/10 border border-yellow-500/20">
+                <h4 className="text-sm font-semibold mb-3 flex items-center gap-2 text-yellow-500">
+                  <Lock size={14} /> Definir Nova Senha
+                </h4>
+                <div className="space-y-3">
+                  <input
+                    type="password"
+                    placeholder="Nova Senha"
+                    value={adminSetPassword}
+                    onChange={(e) => setAdminSetPassword(e.target.value)}
+                    className="w-full bg-black/40 border border-white/10 rounded p-2 text-white text-sm focus:outline-none focus:border-yellow-500"
+                  />
+                  <input
+                    type="password"
+                    placeholder="Confirmar Nova Senha"
+                    value={confirmAdminSetPassword}
+                    onChange={(e) => setConfirmAdminSetPassword(e.target.value)}
+                    className="w-full bg-black/40 border border-white/10 rounded p-2 text-white text-sm focus:outline-none focus:border-yellow-500"
+                  />
+                  <div className="flex gap-2 justify-end mt-2">
+                    <button
+                      type="button"
+                      onClick={() => setShowAdminSetPassword(false)}
+                      className="text-xs text-gray-400 hover:text-white"
+                    >
+                      Cancelar
+                    </button>
+                    <button
+                      type="button"
+                      onClick={handleAdminUpdatePassword}
+                      className="bg-yellow-600 hover:bg-yellow-700 text-white text-xs font-bold py-1 px-3 rounded transition-colors"
+                      disabled={loading || !adminSetPassword}
+                    >
+                      {loading ? "Alterando..." : "Confirmar Troca"}
+                    </button>
+                  </div>
+                </div>
+              </div>
+            )}
           </div>
 
           <div
             className={styles.footer}
-            style={{ justifyContent: "space-between", alignItems: "center" }}
+            style={{ justifyContent: "space-between", alignItems: "center", gap: "1rem" }}
           >
             <div>
-              {isEditing && !showDeleteConfirm && (
+              {isEditing && !showDeleteConfirm && !showAdminSetPassword && (
                 <div
                   style={{ display: "flex", gap: "1rem", alignItems: "center" }}
                 >
@@ -264,37 +339,7 @@ export default function UserModal({ userToEdit, onClose }) {
                   </button>
                   <button
                     type="button"
-                    onClick={async () => {
-                      if (
-                        !confirm(
-                          "Deseja enviar um email de redefinição de senha para este usuário?"
-                        )
-                      )
-                        return;
-                      setLoading(true);
-                      try {
-                        const { error } =
-                          await supabase.auth.resetPasswordForEmail(
-                            formData.email,
-                            {
-                              redirectTo:
-                                window.location.origin + "/update-password",
-                            }
-                          );
-                        if (error) throw error;
-
-                        await supabase
-                          .from("profiles")
-                          .update({ must_change_password: true })
-                          .eq("id", userToEdit.id);
-
-                        alert("Email de redefinição enviado com sucesso!");
-                      } catch (err) {
-                        alert("Erro ao enviar email: " + err.message);
-                      } finally {
-                        setLoading(false);
-                      }
-                    }}
+                    onClick={() => setShowAdminSetPassword(true)}
                     className={styles.cancelBtn}
                     style={{
                       color: "#fbbf24",
@@ -304,29 +349,32 @@ export default function UserModal({ userToEdit, onClose }) {
                       gap: "0.5rem",
                     }}
                   >
-                    <Lock size={16} /> Resetar Senha
+                    <Lock size={16} /> Alterar Senha
                   </button>
                 </div>
               )}
             </div>
 
-            <div style={{ display: "flex", gap: "0.5rem" }}>
+            <div style={{ display: "flex", gap: "0.5rem", flexWrap: "wrap", justifyContent: "flex-end" }}>
               <button
                 type="button"
                 onClick={onClose}
                 className={styles.cancelBtn}
               >
-                Cancelar
+                Fechar
               </button>
-              {!showDeleteConfirm ? (
+              
+              {!showDeleteConfirm && (
                 <button
                   type="submit"
                   className={styles.saveBtn}
                   disabled={loading}
                 >
-                  <Save size={18} /> {loading ? "Salvando..." : "Salvar"}
+                  <Save size={18} /> {loading ? "Salvando..." : "Salvar Alterações"}
                 </button>
-              ) : (
+              )}
+
+              {showDeleteConfirm && (
                 <div
                   style={{
                     display: "flex",
@@ -356,7 +404,14 @@ export default function UserModal({ userToEdit, onClose }) {
                     style={{ backgroundColor: "#ef4444" }}
                     disabled={loading || !adminPassword}
                   >
-                    Confirmar
+                    Confirmar Exclusão
+                  </button>
+                  <button 
+                    type="button"
+                    onClick={() => setShowDeleteConfirm(false)}
+                    className="text-xs text-gray-400"
+                  >
+                    Cancelar
                   </button>
                 </div>
               )}
