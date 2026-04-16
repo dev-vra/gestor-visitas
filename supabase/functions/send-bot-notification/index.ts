@@ -1,31 +1,37 @@
-import { serve } from "https://deno.land/std@0.168.0/http/server.ts"
+import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
 
-const RESEND_API_KEY = Deno.env.get('RESEND_API_KEY')
+const RESEND_API_KEY = Deno.env.get("RESEND_API_KEY");
 
 serve(async (req) => {
   try {
-    const payload = await req.json()
-    const { record } = payload
+    const payload = await req.json();
+    const { record } = payload;
 
     if (!record) {
-      return new Response(JSON.stringify({ error: 'No record found in payload' }), { status: 400 })
+      return new Response(
+        JSON.stringify({ error: "No record found in payload" }),
+        { status: 400 },
+      );
     }
 
     // Filtro de segurança: Só processa se a origem for 'Bot'
-    if (record.source !== 'Bot') {
-      return new Response(JSON.stringify({ message: `Ignored: source is ${record.source}` }), { status: 200 })
+    if (record.source !== "Bot") {
+      return new Response(
+        JSON.stringify({ message: `Ignored: source is ${record.source}` }),
+        { status: 200 },
+      );
     }
 
-    // Nota: O e-mail "from" deve ser de um domínio verificado no Resend.
     // Enquanto não houver domínio verificado, use "onboarding@resend.dev"
-    const fromEmail = "Vistorias <onboarding@resend.dev>"
-    const toEmail = "erlanmoraes@geogis.com.br"
+    const fromEmail = "Vistorias <onboarding@resend.dev>";
+    // Destinatário temporário para teste (Resend exige o e-mail da conta para domínios não verificados)
+    const toEmail = "erlanmoraes@geogis.com.br";
 
-    const res = await fetch('https://api.resend.com/emails', {
-      method: 'POST',
+    const res = await fetch("https://api.resend.com/emails", {
+      method: "POST",
       headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${RESEND_API_KEY}`,
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${RESEND_API_KEY}`,
       },
       body: JSON.stringify({
         from: fromEmail,
@@ -42,8 +48,8 @@ serve(async (req) => {
             <p><strong>Cidade:</strong> ${record.city}</p>
             <p><strong>Bairro:</strong> ${record.neighborhood}</p>
             <p><strong>Endereço:</strong> ${record.address_street}, ${record.address_number}</p>
-            ${record.location_url ? `<p><strong>Localização:</strong> <a href="${record.location_url}">Ver no Google Maps</a></p>` : ''}
-            <p><strong>Observações:</strong> ${record.observations || 'Nenhuma'}</p>
+            ${record.location_url ? `<p><strong>Localização:</strong> <a href="${record.location_url}">Ver no Google Maps</a></p>` : ""}
+            <p><strong>Observações:</strong> ${record.observations || "Nenhuma"}</p>
             <hr style="border: 0; border-top: 1px solid #eee;" />
             <p style="font-size: 0.875rem; color: #666;">
               Origem: ${record.source} | Status: ${record.status}
@@ -51,18 +57,27 @@ serve(async (req) => {
           </div>
         `,
       }),
-    })
+    });
 
-    const data = await res.json()
+    const data = await res.json();
+    console.log("Resend Response Status:", res.status);
+    console.log("Resend Response Data:", JSON.stringify(data, null, 2));
+
+    if (!res.ok) {
+      console.error(
+        "ERRO DETALHADO DO RESEND:",
+        data.message || data.error || data,
+      );
+    }
 
     return new Response(JSON.stringify(data), {
-      headers: { 'Content-Type': 'application/json' },
+      headers: { "Content-Type": "application/json" },
       status: res.status,
-    })
+    });
   } catch (error) {
     return new Response(JSON.stringify({ error: error.message }), {
-      headers: { 'Content-Type': 'application/json' },
+      headers: { "Content-Type": "application/json" },
       status: 500,
-    })
+    });
   }
-})
+});

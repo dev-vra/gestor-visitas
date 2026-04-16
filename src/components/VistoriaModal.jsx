@@ -11,6 +11,7 @@ import { format } from "date-fns";
 export default function VistoriaModal({ visit, onClose }) {
   const { profile, user } = useAuth(); // Logged user
   const isEditing = !!visit;
+  const isOldTask = visit?.created_at && new Date(visit.created_at) < new Date("2026-04-01");
 
   // Tabs: details, observations, history
   const [activeTab, setActiveTab] = useState("details");
@@ -194,9 +195,11 @@ export default function VistoriaModal({ visit, onClose }) {
       { key: "address_number", label: "Número" },
     ];
 
-    const missingFields = requiredFields
-      .filter((f) => !formData[f.key]?.trim())
-      .map((f) => f.label);
+    const missingFields = isOldTask 
+      ? [] 
+      : requiredFields
+          .filter((f) => !formData[f.key]?.trim())
+          .map((f) => f.label);
 
     if (missingFields.length > 0) {
       alert(
@@ -319,7 +322,7 @@ export default function VistoriaModal({ visit, onClose }) {
                 <div className={styles.row}>
                   <div className={styles.inputGroup}>
                     <label>
-                      Nome Completo <span style={{ color: "red" }}>*</span>
+                      Nome Completo {!isOldTask && <span style={{ color: "red" }}>*</span>}
                     </label>
                     <input
                       name="name"
@@ -330,7 +333,7 @@ export default function VistoriaModal({ visit, onClose }) {
                   </div>
                   <div className={styles.inputGroup}>
                     <label>
-                      CPF <span style={{ color: "red" }}>*</span>
+                      CPF {!isOldTask && <span style={{ color: "red" }}>*</span>}
                     </label>
                     <input
                       name="cpf"
@@ -344,7 +347,7 @@ export default function VistoriaModal({ visit, onClose }) {
                 <div className={styles.row}>
                   <div className={styles.inputGroup}>
                     <label>
-                      Celular (WhatsApp) <span style={{ color: "red" }}>*</span>
+                      Celular (WhatsApp) {!isOldTask && <span style={{ color: "red" }}>*</span>}
                     </label>
                     <input
                       name="phone1"
@@ -371,7 +374,7 @@ export default function VistoriaModal({ visit, onClose }) {
                 <div className={styles.row}>
                   <div className={styles.inputGroup}>
                     <label>
-                      Cidade <span style={{ color: "red" }}>*</span>
+                      Cidade {!isOldTask && <span style={{ color: "red" }}>*</span>}
                     </label>
                     <select
                       name="city"
@@ -392,7 +395,7 @@ export default function VistoriaModal({ visit, onClose }) {
                   </div>
                   <div className={styles.inputGroup}>
                     <label>
-                      Bairro <span style={{ color: "red" }}>*</span>
+                      Bairro {!isOldTask && <span style={{ color: "red" }}>*</span>}
                     </label>
                     <select
                       name="neighborhood"
@@ -432,7 +435,7 @@ export default function VistoriaModal({ visit, onClose }) {
                 <div className={styles.row}>
                   <div className={styles.inputGroup}>
                     <label>
-                      Rua <span style={{ color: "red" }}>*</span>
+                      Rua {!isOldTask && <span style={{ color: "red" }}>*</span>}
                     </label>
                     <input
                       name="address_street"
@@ -444,7 +447,7 @@ export default function VistoriaModal({ visit, onClose }) {
                   </div>
                   <div className={styles.inputGroup} style={{ maxWidth: "120px" }}>
                     <label>
-                      Número <span style={{ color: "red" }}>*</span>
+                      Número {!isOldTask && <span style={{ color: "red" }}>*</span>}
                     </label>
                     <input
                       name="address_number"

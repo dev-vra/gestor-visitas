@@ -10,6 +10,7 @@ import { format } from "date-fns";
 export default function VisitModal({ visit, onClose }) {
   const { profile, user } = useAuth(); // Logged user
   const isEditing = !!visit;
+  const isOldTask = visit?.created_at && new Date(visit.created_at) < new Date("2026-04-01");
 
   // Tabs: details, observations, history
   const [activeTab, setActiveTab] = useState("details");
@@ -264,7 +265,7 @@ export default function VisitModal({ visit, onClose }) {
                       value={formData.name}
                       onChange={handleChange}
                       disabled={!canEditDetails}
-                      required
+                      required={!isOldTask}
                     />
                   </div>
                   <div className={styles.inputGroup}>
@@ -286,7 +287,7 @@ export default function VisitModal({ visit, onClose }) {
                       value={formData.phone1}
                       onChange={handlePhoneMask}
                       disabled={!canEditDetails}
-                      required
+                      required={!isOldTask}
                       placeholder="(XX) 9XXXX-XXXX"
                     />
                   </div>
@@ -315,7 +316,7 @@ export default function VisitModal({ visit, onClose }) {
                         setFormData((p) => ({ ...p, neighborhood: "" }));
                       }}
                       disabled={!canEditDetails}
-                      required
+                      required={!isOldTask}
                     >
                       <option value="">Selecione...</option>
                       {cidadesData.data.map((c) => (
@@ -332,7 +333,7 @@ export default function VisitModal({ visit, onClose }) {
                       value={formData.neighborhood}
                       onChange={handleChange}
                       disabled={!canEditDetails || !formData.city}
-                      required
+                      required={!isOldTask}
                     >
                       <option value="">Selecione...</option>
                       {availableNeighborhoods.map((b) => (
