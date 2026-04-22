@@ -89,18 +89,20 @@ export default function VisitModal({ visit, onClose }) {
   };
 
   const fetchCidades = async () => {
-    const { data } = await supabase
-      .from("City")
+    const { data, error } = await supabase
+      .from("city")
       .select("id, name")
       .order("name");
+    if (error) console.error("fetchCidades error:", error);
     setCidades(data || []);
   };
 
   const fetchBairros = async () => {
-    const { data } = await supabase
-      .from("Neighborhood")
+    const { data, error } = await supabase
+      .from("neighborhood")
       .select("id, name, city_id")
       .order("name");
+    if (error) console.error("fetchBairros error:", error);
     setBairros(data || []);
   };
 

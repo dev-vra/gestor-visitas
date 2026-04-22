@@ -36,13 +36,13 @@ function BairroModal({ bairro, cidades, onClose, onSaved }) {
     try {
       if (isEditing) {
         const { error: err } = await supabase
-          .from("Neighborhood")
+          .from("neighborhood")
           .update({ name: form.name.trim(), city_id: Number(form.city_id) })
           .eq("id", bairro.id);
         if (err) throw err;
       } else {
         const { error: err } = await supabase
-          .from("Neighborhood")
+          .from("neighborhood")
           .insert({ name: form.name.trim(), city_id: Number(form.city_id) });
         if (err) throw err;
       }
@@ -192,20 +192,21 @@ export default function Bairros() {
   }, []);
 
   const fetchCidades = async () => {
-    const { data } = await supabase
-      .from("City")
+    const { data, error } = await supabase
+      .from("city")
       .select("id, name")
       .order("name");
+    if (error) console.error("fetchCidades error:", error);
     setCidades(data || []);
   };
 
   const fetchBairros = async () => {
     setLoading(true);
     const { data, error } = await supabase
-      .from("Neighborhood")
-      .select("id, name, city_id, City(name)")
+      .from("neighborhood")
+      .select("id, name, city_id, city(name)")
       .order("name");
-    if (error) console.error(error);
+    if (error) console.error("fetchBairros error:", error);
     setBairros(data || []);
     setLoading(false);
   };
@@ -230,7 +231,7 @@ export default function Bairros() {
     setDeleting(true);
     try {
       const { error } = await supabase
-        .from("Neighborhood")
+        .from("neighborhood")
         .delete()
         .eq("id", deleteModal.id);
       if (error) throw error;
@@ -248,7 +249,7 @@ export default function Bairros() {
     const term = searchTerm.toLowerCase();
     const matchSearch =
       b.name.toLowerCase().includes(term) ||
-      b.City?.name?.toLowerCase().includes(term);
+      b.city?.name?.toLowerCase().includes(term);
     const matchCidade = cidadeFiltro
       ? b.city_id === Number(cidadeFiltro)
       : true;
@@ -258,7 +259,7 @@ export default function Bairros() {
   // Agrupado por cidade para exibição
   const grouped = filtered.reduce((acc, b) => {
     const key = b.city_id;
-    if (!acc[key]) acc[key] = { cidade: b.City?.name || "—", items: [] };
+    if (!acc[key]) acc[key] = { cidade: b.city?.name || "—", items: [] };
     acc[key].items.push(b);
     return acc;
   }, {});
