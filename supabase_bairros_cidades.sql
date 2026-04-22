@@ -39,13 +39,15 @@ CREATE POLICY "Leitura pública autenticada - bairros"
   USING (true);
 
 -- Apenas gestores podem INSERIR, ATUALIZAR e EXCLUIR
+-- Usamos auth.jwt() para ler o role do token JWT (sem depender de public.profiles)
 CREATE POLICY "Gestores podem inserir cidades"
   ON public.cidades FOR INSERT
   TO authenticated
   WITH CHECK (
-    EXISTS (
-      SELECT 1 FROM public.profiles
-      WHERE id = auth.uid() AND role = 'gestor'
+    (auth.jwt() ->> 'role') = 'gestor'
+    OR EXISTS (
+      SELECT 1 FROM profiles
+      WHERE profiles.id = auth.uid() AND profiles.role = 'gestor'
     )
   );
 
@@ -53,9 +55,10 @@ CREATE POLICY "Gestores podem atualizar cidades"
   ON public.cidades FOR UPDATE
   TO authenticated
   USING (
-    EXISTS (
-      SELECT 1 FROM public.profiles
-      WHERE id = auth.uid() AND role = 'gestor'
+    (auth.jwt() ->> 'role') = 'gestor'
+    OR EXISTS (
+      SELECT 1 FROM profiles
+      WHERE profiles.id = auth.uid() AND profiles.role = 'gestor'
     )
   );
 
@@ -63,9 +66,10 @@ CREATE POLICY "Gestores podem excluir cidades"
   ON public.cidades FOR DELETE
   TO authenticated
   USING (
-    EXISTS (
-      SELECT 1 FROM public.profiles
-      WHERE id = auth.uid() AND role = 'gestor'
+    (auth.jwt() ->> 'role') = 'gestor'
+    OR EXISTS (
+      SELECT 1 FROM profiles
+      WHERE profiles.id = auth.uid() AND profiles.role = 'gestor'
     )
   );
 
@@ -73,9 +77,10 @@ CREATE POLICY "Gestores podem inserir bairros"
   ON public.bairros FOR INSERT
   TO authenticated
   WITH CHECK (
-    EXISTS (
-      SELECT 1 FROM public.profiles
-      WHERE id = auth.uid() AND role = 'gestor'
+    (auth.jwt() ->> 'role') = 'gestor'
+    OR EXISTS (
+      SELECT 1 FROM profiles
+      WHERE profiles.id = auth.uid() AND profiles.role = 'gestor'
     )
   );
 
@@ -83,9 +88,10 @@ CREATE POLICY "Gestores podem atualizar bairros"
   ON public.bairros FOR UPDATE
   TO authenticated
   USING (
-    EXISTS (
-      SELECT 1 FROM public.profiles
-      WHERE id = auth.uid() AND role = 'gestor'
+    (auth.jwt() ->> 'role') = 'gestor'
+    OR EXISTS (
+      SELECT 1 FROM profiles
+      WHERE profiles.id = auth.uid() AND profiles.role = 'gestor'
     )
   );
 
@@ -93,9 +99,10 @@ CREATE POLICY "Gestores podem excluir bairros"
   ON public.bairros FOR DELETE
   TO authenticated
   USING (
-    EXISTS (
-      SELECT 1 FROM public.profiles
-      WHERE id = auth.uid() AND role = 'gestor'
+    (auth.jwt() ->> 'role') = 'gestor'
+    OR EXISTS (
+      SELECT 1 FROM profiles
+      WHERE profiles.id = auth.uid() AND profiles.role = 'gestor'
     )
   );
 
@@ -136,7 +143,7 @@ INSERT INTO public.bairros (id, nome, cidade_id) VALUES
   (6,   'JARDIM SANTA AMALIA', 1),
   (30,  'NÚCLEO HABITACIONAL SÃO GONÇALO', 1),
   (46,  'SETOR 02 DO NÚCLEO HABITACIONAL CPA I', 1),
-  (54,  'São João Del Rey', 1),
+  (54,  'São Mateus', 1),
   (47,  'SETOR 01 DO NÚCLEO HABITACIONAL CPA I', 1),
   (48,  'SETOR 03 DO NÚCLEO HABITACIONAL CPA I', 1),
   (20,  'CONJUNTO HABITACIONAL CPA II', 1),
