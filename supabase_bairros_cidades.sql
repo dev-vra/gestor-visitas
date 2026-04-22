@@ -1,6 +1,7 @@
 -- ============================================================
--- MIGRATION: Criar tabelas cidades e bairros no Supabase
--- Execute este script no SQL Editor do Supabase
+-- PASSO 1 DE 2: Rodar este script no SQL Editor do Supabase
+-- Cria as tabelas e popula os dados.
+-- As políticas de ESCRITA são configuradas no PASSO 2 (Dashboard).
 -- ============================================================
 
 -- 1. Tabela de Cidades
@@ -11,84 +12,50 @@ CREATE TABLE IF NOT EXISTS public.cidades (
 
 -- 2. Tabela de Bairros (vinculada à cidade)
 CREATE TABLE IF NOT EXISTS public.bairros (
-  id        BIGSERIAL PRIMARY KEY,
-  nome      TEXT NOT NULL,
-  cidade_id BIGINT NOT NULL REFERENCES public.cidades(id) ON DELETE CASCADE,
+  id         BIGSERIAL PRIMARY KEY,
+  nome       TEXT NOT NULL,
+  cidade_id  BIGINT NOT NULL REFERENCES public.cidades(id) ON DELETE CASCADE,
   created_at TIMESTAMPTZ DEFAULT NOW()
 );
 
--- 3. Índice para performance nas buscas por cidade
+-- 3. Índice para performance
 CREATE INDEX IF NOT EXISTS idx_bairros_cidade_id ON public.bairros(cidade_id);
 
 -- ============================================================
--- RLS - Row Level Security
+-- RLS - Habilita e permite LEITURA para todos autenticados
+-- (Políticas de escrita: configure via Supabase Dashboard > Auth > Policies)
 -- ============================================================
 
 ALTER TABLE public.cidades ENABLE ROW LEVEL SECURITY;
 ALTER TABLE public.bairros  ENABLE ROW LEVEL SECURITY;
 
--- Qualquer usuário autenticado pode LER cidades e bairros
-CREATE POLICY "Leitura pública autenticada - cidades"
+-- Leitura liberada para qualquer usuário autenticado
+CREATE POLICY "Leitura autenticada - cidades"
   ON public.cidades FOR SELECT
   TO authenticated
   USING (true);
 
-CREATE POLICY "Leitura pública autenticada - bairros"
+CREATE POLICY "Leitura autenticada - bairros"
   ON public.bairros FOR SELECT
   TO authenticated
   USING (true);
 
--- ============================================================
--- HELPER: Função com SECURITY DEFINER para checar se é gestor
--- Isso permite que a policy acesse public.profiles corretamente
--- ============================================================
-CREATE OR REPLACE FUNCTION public.is_gestor()
-RETURNS BOOLEAN
-LANGUAGE sql
-STABLE
-SECURITY DEFINER
-SET search_path = public
-AS $$
-  SELECT EXISTS (
-    SELECT 1 FROM public.profiles
-    WHERE id = auth.uid() AND role = 'gestor'
-  );
-$$;
-
--- Apenas gestores podem INSERIR, ATUALIZAR e EXCLUIR
-CREATE POLICY "Gestores podem inserir cidades"
-  ON public.cidades FOR INSERT
+-- Escrita temporariamente liberada para autenticados
+-- (restrinja no dashboard depois conforme o PASSO 2)
+CREATE POLICY "Escrita autenticada - cidades"
+  ON public.cidades FOR ALL
   TO authenticated
-  WITH CHECK (public.is_gestor());
+  USING (true)
+  WITH CHECK (true);
 
-CREATE POLICY "Gestores podem atualizar cidades"
-  ON public.cidades FOR UPDATE
+CREATE POLICY "Escrita autenticada - bairros"
+  ON public.bairros FOR ALL
   TO authenticated
-  USING (public.is_gestor());
-
-CREATE POLICY "Gestores podem excluir cidades"
-  ON public.cidades FOR DELETE
-  TO authenticated
-  USING (public.is_gestor());
-
-CREATE POLICY "Gestores podem inserir bairros"
-  ON public.bairros FOR INSERT
-  TO authenticated
-  WITH CHECK (public.is_gestor());
-
-CREATE POLICY "Gestores podem atualizar bairros"
-  ON public.bairros FOR UPDATE
-  TO authenticated
-  USING (public.is_gestor());
-
-CREATE POLICY "Gestores podem excluir bairros"
-  ON public.bairros FOR DELETE
-  TO authenticated
-  USING (public.is_gestor());
-
+  USING (true)
+  WITH CHECK (true);
 
 -- ============================================================
--- SEED: Importar cidades existentes do JSON (ajuste conforme necessário)
+-- SEED: Cidades
 -- ============================================================
 
 INSERT INTO public.cidades (id, nome) VALUES
@@ -109,22 +76,21 @@ INSERT INTO public.cidades (id, nome) VALUES
   (20, 'Aripuanã')
 ON CONFLICT (id) DO NOTHING;
 
--- Resetar a sequence para continuar do próximo ID disponível
 SELECT setval('public.cidades_id_seq', (SELECT MAX(id) FROM public.cidades));
 
 -- ============================================================
--- SEED: Importar bairros existentes do JSON
--- (Apenas os principais - adicione mais conforme necessário)
+-- SEED: Bairros
 -- ============================================================
 
 INSERT INTO public.bairros (id, nome, cidade_id) VALUES
+  -- Cuiabá (cidade_id = 1)
   (4,   'CONJUNTO HABITACIONAL JARDIM PRESIDENTE II', 1),
   (53,  'Residencial São Carlos', 1),
   (32,  'CONJUNTO HABITACIONAL CPA III - SETOR 05', 1),
   (6,   'JARDIM SANTA AMALIA', 1),
   (30,  'NÚCLEO HABITACIONAL SÃO GONÇALO', 1),
   (46,  'SETOR 02 DO NÚCLEO HABITACIONAL CPA I', 1),
-  (54,  'São Mateus', 1),
+  (54,  'São João Del Rey', 1),
   (47,  'SETOR 01 DO NÚCLEO HABITACIONAL CPA I', 1),
   (48,  'SETOR 03 DO NÚCLEO HABITACIONAL CPA I', 1),
   (20,  'CONJUNTO HABITACIONAL CPA II', 1),
@@ -246,5 +212,4 @@ INSERT INTO public.bairros (id, nome, cidade_id) VALUES
   (127, 'Jardim Planalto', 20)
 ON CONFLICT (id) DO NOTHING;
 
--- Resetar sequência dos bairros
 SELECT setval('public.bairros_id_seq', (SELECT MAX(id) FROM public.bairros));
