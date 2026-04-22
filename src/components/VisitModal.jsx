@@ -3,8 +3,6 @@ import { supabase } from "../lib/supabase";
 import { useAuth } from "../contexts/AuthContext";
 import styles from "../styles/VisitModal.module.css";
 import { X, Save, Clock, MessageSquare, FileText, Send } from "lucide-react";
-import cidadesData from "../data/cidades.json";
-import bairrosData from "../data/bairros.json";
 import { format } from "date-fns";
 
 export default function VisitModal({ visit, onClose }) {
@@ -17,6 +15,10 @@ export default function VisitModal({ visit, onClose }) {
 
   const [loading, setLoading] = useState(false);
   const [agents, setAgents] = useState([]);
+
+  // Lookup data from DB
+  const [cidades, setCidades] = useState([]);
+  const [bairros, setBairros] = useState([]);
 
   // Audit & Obs Data
   const [history, setHistory] = useState([]);
@@ -41,10 +43,10 @@ export default function VisitModal({ visit, onClose }) {
   });
 
   const availableNeighborhoods = formData.city
-    ? bairrosData.data.filter(
+    ? bairros.filter(
         (b) =>
           b.cidade_id ===
-          cidadesData.data.find((c) => c.nome === formData.city)?.id
+          cidades.find((c) => c.nome === formData.city)?.id
       )
     : [];
 
@@ -55,6 +57,8 @@ export default function VisitModal({ visit, onClose }) {
 
   useEffect(() => {
     fetchAgents();
+    fetchCidades();
+    fetchBairros();
     if (visit) {
       setFormData({
         name: visit.name || "",
@@ -82,6 +86,22 @@ export default function VisitModal({ visit, onClose }) {
       .select("id, full_name")
       .neq("role", "consultor"); // Assuming consultants are not agents
     setAgents(data || []);
+  };
+
+  const fetchCidades = async () => {
+    const { data } = await supabase
+      .from("cidades")
+      .select("id, nome")
+      .order("nome");
+    setCidades(data || []);
+  };
+
+  const fetchBairros = async () => {
+    const { data } = await supabase
+      .from("bairros")
+      .select("id, nome, cidade_id")
+      .order("nome");
+    setBairros(data || []);
   };
 
   const fetchHistory = async (visitId) => {
@@ -319,7 +339,7 @@ export default function VisitModal({ visit, onClose }) {
                       required={!isOldTask}
                     >
                       <option value="">Selecione...</option>
-                      {cidadesData.data.map((c) => (
+                      {cidades.map((c) => (
                         <option key={c.id} value={c.nome}>
                           {c.nome}
                         </option>

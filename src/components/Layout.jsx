@@ -8,6 +8,7 @@ import {
   LogOut,
   Menu,
   X,
+  MapPin,
 } from "lucide-react";
 import styles from "../styles/Layout.module.css";
 
@@ -25,6 +26,7 @@ export default function Layout() {
 
   if (profile?.role === "gestor") {
     navigation.push({ name: "Usuários", href: "/users", icon: Users });
+    navigation.push({ name: "Bairros", href: "/bairros", icon: MapPin });
   }
 
   return (

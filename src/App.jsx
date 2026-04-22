@@ -11,6 +11,7 @@ import ProtectedRoute from "./components/ProtectedRoute";
 import Vistorias from "./pages/Vistorias";
 import Users from "./pages/Users";
 import Profile from "./pages/Profile";
+import Bairros from "./pages/Bairros";
 
 import Layout from "./components/Layout";
 
@@ -31,6 +32,7 @@ function App() {
             <Route index element={<Dashboard />} />
             <Route path="vistorias" element={<Vistorias />} />
             <Route path="users" element={<Users />} />
+            <Route path="bairros" element={<Bairros />} />
             <Route path="profile" element={<Profile />} />
           </Route>
 
