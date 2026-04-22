@@ -38,73 +38,54 @@ CREATE POLICY "Leitura pública autenticada - bairros"
   TO authenticated
   USING (true);
 
+-- ============================================================
+-- HELPER: Função com SECURITY DEFINER para checar se é gestor
+-- Isso permite que a policy acesse public.profiles corretamente
+-- ============================================================
+CREATE OR REPLACE FUNCTION public.is_gestor()
+RETURNS BOOLEAN
+LANGUAGE sql
+STABLE
+SECURITY DEFINER
+SET search_path = public
+AS $$
+  SELECT EXISTS (
+    SELECT 1 FROM public.profiles
+    WHERE id = auth.uid() AND role = 'gestor'
+  );
+$$;
+
 -- Apenas gestores podem INSERIR, ATUALIZAR e EXCLUIR
--- Usamos auth.jwt() para ler o role do token JWT (sem depender de public.profiles)
 CREATE POLICY "Gestores podem inserir cidades"
   ON public.cidades FOR INSERT
   TO authenticated
-  WITH CHECK (
-    (auth.jwt() ->> 'role') = 'gestor'
-    OR EXISTS (
-      SELECT 1 FROM profiles
-      WHERE profiles.id = auth.uid() AND profiles.role = 'gestor'
-    )
-  );
+  WITH CHECK (public.is_gestor());
 
 CREATE POLICY "Gestores podem atualizar cidades"
   ON public.cidades FOR UPDATE
   TO authenticated
-  USING (
-    (auth.jwt() ->> 'role') = 'gestor'
-    OR EXISTS (
-      SELECT 1 FROM profiles
-      WHERE profiles.id = auth.uid() AND profiles.role = 'gestor'
-    )
-  );
+  USING (public.is_gestor());
 
 CREATE POLICY "Gestores podem excluir cidades"
   ON public.cidades FOR DELETE
   TO authenticated
-  USING (
-    (auth.jwt() ->> 'role') = 'gestor'
-    OR EXISTS (
-      SELECT 1 FROM profiles
-      WHERE profiles.id = auth.uid() AND profiles.role = 'gestor'
-    )
-  );
+  USING (public.is_gestor());
 
 CREATE POLICY "Gestores podem inserir bairros"
   ON public.bairros FOR INSERT
   TO authenticated
-  WITH CHECK (
-    (auth.jwt() ->> 'role') = 'gestor'
-    OR EXISTS (
-      SELECT 1 FROM profiles
-      WHERE profiles.id = auth.uid() AND profiles.role = 'gestor'
-    )
-  );
+  WITH CHECK (public.is_gestor());
 
 CREATE POLICY "Gestores podem atualizar bairros"
   ON public.bairros FOR UPDATE
   TO authenticated
-  USING (
-    (auth.jwt() ->> 'role') = 'gestor'
-    OR EXISTS (
-      SELECT 1 FROM profiles
-      WHERE profiles.id = auth.uid() AND profiles.role = 'gestor'
-    )
-  );
+  USING (public.is_gestor());
 
 CREATE POLICY "Gestores podem excluir bairros"
   ON public.bairros FOR DELETE
   TO authenticated
-  USING (
-    (auth.jwt() ->> 'role') = 'gestor'
-    OR EXISTS (
-      SELECT 1 FROM profiles
-      WHERE profiles.id = auth.uid() AND profiles.role = 'gestor'
-    )
-  );
+  USING (public.is_gestor());
+
 
 -- ============================================================
 -- SEED: Importar cidades existentes do JSON (ajuste conforme necessário)
