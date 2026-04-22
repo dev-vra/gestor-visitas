@@ -90,7 +90,7 @@ export default function VisitModal({ visit, onClose }) {
 
   const fetchCidades = async () => {
     const { data, error } = await supabase
-      .from("city")
+      .from("City")
       .select("id, name")
       .order("name");
     if (error) console.error("fetchCidades error:", error);
@@ -99,7 +99,7 @@ export default function VisitModal({ visit, onClose }) {
 
   const fetchBairros = async () => {
     const { data, error } = await supabase
-      .from("neighborhood")
+      .from("Neighborhood")
       .select("id, name, city_id")
       .order("name");
     if (error) console.error("fetchBairros error:", error);
