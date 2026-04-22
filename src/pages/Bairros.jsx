@@ -20,15 +20,15 @@ function BairroModal({ bairro, cidades, onClose, onSaved }) {
   const isEditing = !!bairro;
   const [loading, setLoading] = useState(false);
   const [form, setForm] = useState({
-    nome: bairro?.nome || "",
-    cidade_id: bairro?.cidade_id || "",
+    name: bairro?.name || "",
+    city_id: bairro?.city_id || "",
   });
   const [error, setError] = useState("");
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError("");
-    if (!form.nome.trim() || !form.cidade_id) {
+    if (!form.name.trim() || !form.city_id) {
       setError("Preencha todos os campos.");
       return;
     }
@@ -36,14 +36,14 @@ function BairroModal({ bairro, cidades, onClose, onSaved }) {
     try {
       if (isEditing) {
         const { error: err } = await supabase
-          .from("bairros")
-          .update({ nome: form.nome.trim(), cidade_id: Number(form.cidade_id) })
+          .from("Neighborhood")
+          .update({ name: form.name.trim(), city_id: Number(form.city_id) })
           .eq("id", bairro.id);
         if (err) throw err;
       } else {
         const { error: err } = await supabase
-          .from("bairros")
-          .insert({ nome: form.nome.trim(), cidade_id: Number(form.cidade_id) });
+          .from("Neighborhood")
+          .insert({ name: form.name.trim(), city_id: Number(form.city_id) });
         if (err) throw err;
       }
       onSaved();
@@ -76,16 +76,16 @@ function BairroModal({ bairro, cidades, onClose, onSaved }) {
             <label>Cidade</label>
             <div className={styles.selectWrapper}>
               <select
-                value={form.cidade_id}
+                value={form.city_id}
                 onChange={(e) =>
-                  setForm((p) => ({ ...p, cidade_id: e.target.value }))
+                  setForm((p) => ({ ...p, city_id: e.target.value }))
                 }
                 required
               >
                 <option value="">Selecione a cidade...</option>
                 {cidades.map((c) => (
                   <option key={c.id} value={c.id}>
-                    {c.nome}
+                    {c.name}
                   </option>
                 ))}
               </select>
@@ -97,8 +97,8 @@ function BairroModal({ bairro, cidades, onClose, onSaved }) {
             <label>Nome do Bairro</label>
             <input
               type="text"
-              value={form.nome}
-              onChange={(e) => setForm((p) => ({ ...p, nome: e.target.value }))}
+              value={form.name}
+              onChange={(e) => setForm((p) => ({ ...p, name: e.target.value }))}
               placeholder="Ex: Jardim Primavera"
               required
             />
@@ -193,18 +193,18 @@ export default function Bairros() {
 
   const fetchCidades = async () => {
     const { data } = await supabase
-      .from("cidades")
-      .select("id, nome")
-      .order("nome");
+      .from("City")
+      .select("id, name")
+      .order("name");
     setCidades(data || []);
   };
 
   const fetchBairros = async () => {
     setLoading(true);
     const { data, error } = await supabase
-      .from("bairros")
-      .select("id, nome, cidade_id, cidades(nome)")
-      .order("nome");
+      .from("Neighborhood")
+      .select("id, name, city_id, City(name)")
+      .order("name");
     if (error) console.error(error);
     setBairros(data || []);
     setLoading(false);
@@ -230,7 +230,7 @@ export default function Bairros() {
     setDeleting(true);
     try {
       const { error } = await supabase
-        .from("bairros")
+        .from("Neighborhood")
         .delete()
         .eq("id", deleteModal.id);
       if (error) throw error;
@@ -247,18 +247,18 @@ export default function Bairros() {
   const filtered = bairros.filter((b) => {
     const term = searchTerm.toLowerCase();
     const matchSearch =
-      b.nome.toLowerCase().includes(term) ||
-      b.cidades?.nome?.toLowerCase().includes(term);
+      b.name.toLowerCase().includes(term) ||
+      b.City?.name?.toLowerCase().includes(term);
     const matchCidade = cidadeFiltro
-      ? b.cidade_id === Number(cidadeFiltro)
+      ? b.city_id === Number(cidadeFiltro)
       : true;
     return matchSearch && matchCidade;
   });
 
   // Agrupado por cidade para exibição
   const grouped = filtered.reduce((acc, b) => {
-    const key = b.cidade_id;
-    if (!acc[key]) acc[key] = { cidade: b.cidades?.nome || "—", items: [] };
+    const key = b.city_id;
+    if (!acc[key]) acc[key] = { cidade: b.City?.name || "—", items: [] };
     acc[key].items.push(b);
     return acc;
   }, {});
@@ -306,12 +306,14 @@ export default function Bairros() {
             onChange={(e) => setCidadeFiltro(e.target.value)}
             className={styles.cidadeFilter}
           >
-            <option value="">Todas as cidades</option>
-            {cidades.map((c) => (
-              <option key={c.id} value={c.id}>
-                {c.nome}
+            <option value="">
+                Todas as cidades
               </option>
-            ))}
+              {cidades.map((c) => (
+                <option key={c.id} value={c.id}>
+                  {c.name}
+                </option>
+              ))}
           </select>
           <ChevronDown size={14} className={styles.selectChevron} />
         </div>
@@ -352,7 +354,7 @@ export default function Bairros() {
                   <div key={b.id} className={styles.bairroRow}>
                     <div className={styles.bairroInfo}>
                       <MapPin size={14} className={styles.bairroPin} />
-                      <span className={styles.bairroNome}>{b.nome}</span>
+                      <span className={styles.bairroNome}>{b.name}</span>
                     </div>
                     <div className={styles.rowActions}>
                       <button
