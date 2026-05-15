@@ -45,8 +45,8 @@ export default function VisitModal({ visit, onClose }) {
   const availableNeighborhoods = formData.city
     ? bairros.filter(
         (b) =>
-          b.city_id ===
-          cidades.find((c) => c.name === formData.city)?.id
+          b.cidade_id ===
+          cidades.find((c) => c.nome === formData.city)?.id
       )
     : [];
 
@@ -90,18 +90,18 @@ export default function VisitModal({ visit, onClose }) {
 
   const fetchCidades = async () => {
     const { data, error } = await supabase
-      .from("City")
-      .select("id, name")
-      .order("name");
+      .from("cidades")
+      .select("id, nome")
+      .order("nome");
     if (error) console.error("fetchCidades error:", error);
     setCidades(data || []);
   };
 
   const fetchBairros = async () => {
     const { data, error } = await supabase
-      .from("Neighborhood")
-      .select("id, name, city_id")
-      .order("name");
+      .from("bairros")
+      .select("id, nome, cidade_id")
+      .order("nome");
     if (error) console.error("fetchBairros error:", error);
     setBairros(data || []);
   };
@@ -342,8 +342,8 @@ export default function VisitModal({ visit, onClose }) {
                     >
                       <option value="">Selecione...</option>
                       {cidades.map((c) => (
-                        <option key={c.id} value={c.name}>
-                          {c.name}
+                        <option key={c.id} value={c.nome}>
+                          {c.nome}
                         </option>
                       ))}
                     </select>
@@ -359,8 +359,8 @@ export default function VisitModal({ visit, onClose }) {
                     >
                       <option value="">Selecione...</option>
                       {availableNeighborhoods.map((b) => (
-                        <option key={b.id} value={b.name}>
-                          {b.name}
+                        <option key={b.id} value={b.nome}>
+                          {b.nome}
                         </option>
                       ))}
                     </select>

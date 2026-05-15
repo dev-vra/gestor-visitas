@@ -20,15 +20,15 @@ function BairroModal({ bairro, cidades, onClose, onSaved }) {
   const isEditing = !!bairro;
   const [loading, setLoading] = useState(false);
   const [form, setForm] = useState({
-    name: bairro?.name || "",
-    city_id: bairro?.city_id || "",
+    nome: bairro?.nome || "",
+    cidade_id: bairro?.cidade_id || "",
   });
   const [error, setError] = useState("");
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError("");
-    if (!form.name.trim() || !form.city_id) {
+    if (!form.nome.trim() || !form.cidade_id) {
       setError("Preencha todos os campos.");
       return;
     }
@@ -36,14 +36,14 @@ function BairroModal({ bairro, cidades, onClose, onSaved }) {
     try {
       if (isEditing) {
         const { error: err } = await supabase
-          .from("Neighborhood")
-          .update({ name: form.name.trim(), city_id: Number(form.city_id) })
+          .from("bairros")
+          .update({ nome: form.nome.trim(), cidade_id: Number(form.cidade_id) })
           .eq("id", bairro.id);
         if (err) throw err;
       } else {
         const { error: err } = await supabase
-          .from("Neighborhood")
-          .insert({ name: form.name.trim(), city_id: Number(form.city_id) });
+          .from("bairros")
+          .insert({ nome: form.nome.trim(), cidade_id: Number(form.cidade_id) });
         if (err) throw err;
       }
       onSaved();
@@ -76,16 +76,16 @@ function BairroModal({ bairro, cidades, onClose, onSaved }) {
             <label>Cidade</label>
             <div className={styles.selectWrapper}>
               <select
-                value={form.city_id}
+                value={form.cidade_id}
                 onChange={(e) =>
-                  setForm((p) => ({ ...p, city_id: e.target.value }))
+                  setForm((p) => ({ ...p, cidade_id: e.target.value }))
                 }
                 required
               >
                 <option value="">Selecione a cidade...</option>
                 {cidades.map((c) => (
                   <option key={c.id} value={c.id}>
-                    {c.name}
+                    {c.nome}
                   </option>
                 ))}
               </select>
@@ -97,8 +97,8 @@ function BairroModal({ bairro, cidades, onClose, onSaved }) {
             <label>Nome do Bairro</label>
             <input
               type="text"
-              value={form.name}
-              onChange={(e) => setForm((p) => ({ ...p, name: e.target.value }))}
+              value={form.nome}
+              onChange={(e) => setForm((p) => ({ ...p, nome: e.target.value }))}
               placeholder="Ex: Jardim Primavera"
               required
             />
@@ -132,14 +132,14 @@ function CidadeModal({ cidade, onClose, onSaved }) {
   const isEditing = !!cidade;
   const [loading, setLoading] = useState(false);
   const [form, setForm] = useState({
-    name: cidade?.name || "",
+    nome: cidade?.nome || "",
   });
   const [error, setError] = useState("");
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError("");
-    if (!form.name.trim()) {
+    if (!form.nome.trim()) {
       setError("Preencha o nome da cidade.");
       return;
     }
@@ -147,14 +147,14 @@ function CidadeModal({ cidade, onClose, onSaved }) {
     try {
       if (isEditing) {
         const { error: err } = await supabase
-          .from("City")
-          .update({ name: form.name.trim() })
+          .from("cidades")
+          .update({ nome: form.nome.trim() })
           .eq("id", cidade.id);
         if (err) throw err;
       } else {
         const { error: err } = await supabase
-          .from("City")
-          .insert({ name: form.name.trim() });
+          .from("cidades")
+          .insert({ nome: form.nome.trim() });
         if (err) throw err;
       }
       onSaved();
@@ -187,8 +187,8 @@ function CidadeModal({ cidade, onClose, onSaved }) {
             <label>Nome da Cidade</label>
             <input
               type="text"
-              value={form.name}
-              onChange={(e) => setForm((p) => ({ ...p, name: e.target.value }))}
+              value={form.nome}
+              onChange={(e) => setForm((p) => ({ ...p, nome: e.target.value }))}
               placeholder="Ex: Cuiabá"
               required
             />
@@ -236,7 +236,7 @@ function DeleteModal({ bairro, onConfirm, onClose, loading }) {
         <div className={styles.modalBody}>
           <p>
             Tem certeza que deseja excluir a localidade{" "}
-            <strong>"{bairro.name}"</strong>?
+            <strong>"{bairro.nome}"</strong>?
           </p>
           {bairro.isCity && (
             <p className={styles.warnText} style={{ color: '#ef4444', marginTop: '10px' }}>
@@ -290,9 +290,9 @@ export default function Bairros() {
 
   const fetchCidades = async () => {
     const { data, error } = await supabase
-      .from("City")
-      .select("id, name")
-      .order("name");
+      .from("cidades")
+      .select("id, nome")
+      .order("nome");
     if (error) console.error("fetchCidades error:", error);
     setCidades(data || []);
   };
@@ -300,9 +300,9 @@ export default function Bairros() {
   const fetchBairros = async () => {
     setLoading(true);
     const { data, error } = await supabase
-      .from("Neighborhood")
-      .select("id, name, city_id, City(name)")
-      .order("name");
+      .from("bairros")
+      .select("id, nome, cidade_id, cidades(nome)")
+      .order("nome");
     if (error) console.error("fetchBairros error:", error);
     setBairros(data || []);
     setLoading(false);
@@ -347,13 +347,13 @@ export default function Bairros() {
     try {
       if (deleteModal.isCity) {
         const { error } = await supabase
-          .from("City")
+          .from("cidades")
           .delete()
           .eq("id", deleteModal.id);
         if (error) throw error;
       } else {
         const { error } = await supabase
-          .from("Neighborhood")
+          .from("bairros")
           .delete()
           .eq("id", deleteModal.id);
         if (error) throw error;
@@ -372,18 +372,18 @@ export default function Bairros() {
   const filtered = bairros.filter((b) => {
     const term = searchTerm.toLowerCase();
     const matchSearch =
-      b.name.toLowerCase().includes(term) ||
-      b.City?.name?.toLowerCase().includes(term);
+      b.nome.toLowerCase().includes(term) ||
+      b.cidades?.nome?.toLowerCase().includes(term);
     const matchCidade = cidadeFiltro
-      ? b.city_id === Number(cidadeFiltro)
+      ? b.cidade_id === Number(cidadeFiltro)
       : true;
     return matchSearch && matchCidade;
   });
 
   // Agrupado por cidade para exibição
   const grouped = filtered.reduce((acc, b) => {
-    const key = b.city_id;
-    if (!acc[key]) acc[key] = { id: b.city_id, cidade: b.City?.name || "—", items: [] };
+    const key = b.cidade_id;
+    if (!acc[key]) acc[key] = { id: b.cidade_id, cidade: b.cidades?.nome || "—", items: [] };
     acc[key].items.push(b);
     return acc;
   }, {});
@@ -392,7 +392,7 @@ export default function Bairros() {
   if (!searchTerm && (!cidadeFiltro)) {
     cidades.forEach(c => {
       if (!grouped[c.id]) {
-        grouped[c.id] = { id: c.id, cidade: c.name, items: [] };
+        grouped[c.id] = { id: c.id, cidade: c.nome, items: [] };
       }
     });
   }
@@ -451,7 +451,7 @@ export default function Bairros() {
               </option>
               {cidades.map((c) => (
                 <option key={c.id} value={c.id}>
-                  {c.name}
+                  {c.nome}
                 </option>
               ))}
           </select>
@@ -490,7 +490,7 @@ export default function Bairros() {
                 <span className={styles.groupCount}>{group.items.length}</span>
                 <div style={{flexGrow: 1}}></div>
                 <button
-                  onClick={() => handleEditCity({ id: group.id, name: group.cidade })}
+                  onClick={() => handleEditCity({ id: group.id, nome: group.cidade })}
                   className={styles.editBtn}
                   title="Editar Cidade"
                   style={{ marginRight: '0.5rem' }}
@@ -498,7 +498,7 @@ export default function Bairros() {
                   <Pencil size={15} />
                 </button>
                 <button
-                  onClick={() => setDeleteModal({ id: group.id, name: group.cidade, isCity: true })}
+                  onClick={() => setDeleteModal({ id: group.id, nome: group.cidade, isCity: true })}
                   className={styles.deleteBtn}
                   title="Excluir Cidade"
                   style={{ opacity: 1 }}
@@ -514,7 +514,7 @@ export default function Bairros() {
                   <div key={b.id} className={styles.bairroRow}>
                     <div className={styles.bairroInfo}>
                       <MapPin size={14} className={styles.bairroPin} />
-                      <span className={styles.bairroNome}>{b.name}</span>
+                      <span className={styles.bairroNome}>{b.nome}</span>
                     </div>
                     <div className={styles.rowActions}>
                       <button

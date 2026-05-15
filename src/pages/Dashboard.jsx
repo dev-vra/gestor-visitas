@@ -71,11 +71,11 @@ export default function Dashboard() {
         .order("full_name");
 
       // Fetch Cities and Neighborhoods from DB
-      const { data: dbCidades } = await supabase.from("City").select("name");
-      const { data: dbBairros } = await supabase.from("Neighborhood").select("name");
+      const { data: dbCidades } = await supabase.from("cidades").select("nome");
+      const { data: dbBairros } = await supabase.from("bairros").select("nome");
 
-      const uniqueCities = dbCidades ? dbCidades.map((c) => c.name).sort() : [];
-      const uniqueNeighborhoods = dbBairros ? dbBairros.map((b) => b.name).sort() : [];
+      const uniqueCities = dbCidades ? dbCidades.map((c) => c.nome).sort() : [];
+      const uniqueNeighborhoods = dbBairros ? dbBairros.map((b) => b.nome).sort() : [];
 
       setOptions({
         cities: uniqueCities || [],
