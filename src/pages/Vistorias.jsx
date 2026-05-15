@@ -21,23 +21,33 @@ export default function Vistorias() {
   const [selectedNeighborhood, setSelectedNeighborhood] = useState("");
   const [selectedStatus, setSelectedStatus] = useState("");
 
-  // Derived options for filters
-  const availableCities = [
-    ...new Set(visits.map((v) => v.city).filter(Boolean)),
-  ].sort((a, b) => a.localeCompare(b));
-
-  const availableNeighborhoods = [
-    ...new Set(
-      visits
-        .filter((v) => !selectedCity || v.city === selectedCity)
-        .map((v) => v.neighborhood)
-        .filter(Boolean),
-    ),
-  ].sort((a, b) => a.localeCompare(b));
+  // Global DB Options for Filters
+  const [dbCidades, setDbCidades] = useState([]);
+  const [dbBairros, setDbBairros] = useState([]);
 
   useEffect(() => {
+    fetchCidades();
+    fetchBairros();
     fetchVisits();
   }, []);
+
+  const fetchCidades = async () => {
+    const { data } = await supabase.from("cidades").select("id, nome").order("nome");
+    setDbCidades(data || []);
+  };
+
+  const fetchBairros = async () => {
+    const { data } = await supabase.from("bairros").select("id, nome, cidade_id").order("nome");
+    setDbBairros(data || []);
+  };
+
+  const availableNeighborhoods = selectedCity
+    ? dbBairros.filter(
+        (b) =>
+          b.cidade_id ===
+          dbCidades.find((c) => c.nome === selectedCity)?.id
+      )
+    : dbBairros;
 
   const fetchVisits = async () => {
     setLoading(true);
@@ -211,9 +221,9 @@ export default function Vistorias() {
           }}
         >
           <option value="">Todas as Cidades</option>
-          {availableCities.map((c) => (
-            <option key={c} value={c}>
-              {c}
+          {dbCidades.map((c) => (
+            <option key={c.id} value={c.nome}>
+              {c.nome}
             </option>
           ))}
         </select>
@@ -224,8 +234,8 @@ export default function Vistorias() {
         >
           <option value="">Todos os Bairros</option>
           {availableNeighborhoods.map((b) => (
-            <option key={b} value={b}>
-              {b}
+            <option key={b.id} value={b.nome}>
+              {b.nome}
             </option>
           ))}
         </select>

@@ -4,8 +4,6 @@ import { useAuth } from "../contexts/AuthContext";
 import styles from "../styles/VistoriaModal.module.css";
 import { X, Save, Clock, MessageSquare, FileText, Send, MapPin } from "lucide-react";
 import LocationLink from "./LocationLink";
-import cidadesData from "../data/cidades.json";
-import bairrosData from "../data/bairros.json";
 import { format } from "date-fns";
 
 export default function VistoriaModal({ visit, onClose }) {
@@ -18,6 +16,10 @@ export default function VistoriaModal({ visit, onClose }) {
 
   const [loading, setLoading] = useState(false);
   const [agents, setAgents] = useState([]);
+
+  // Lookup data from DB
+  const [cidades, setCidades] = useState([]);
+  const [bairros, setBairros] = useState([]);
 
   // Audit & Obs Data
   const [history, setHistory] = useState([]);
@@ -45,10 +47,10 @@ export default function VistoriaModal({ visit, onClose }) {
   });
 
   const availableNeighborhoods = formData.city
-    ? bairrosData.data.filter(
+    ? bairros.filter(
         (b) =>
           b.cidade_id ===
-          cidadesData.data.find((c) => c.nome === formData.city)?.id
+          cidades.find((c) => c.nome === formData.city)?.id
       )
     : [];
 
@@ -59,6 +61,8 @@ export default function VistoriaModal({ visit, onClose }) {
 
   useEffect(() => {
     fetchAgents();
+    fetchCidades();
+    fetchBairros();
     if (visit) {
       setFormData({
         name: visit.name || "",
@@ -89,6 +93,24 @@ export default function VistoriaModal({ visit, onClose }) {
       .select("id, full_name")
       .neq("role", "consultor"); // Assuming consultants are not agents
     setAgents(data || []);
+  };
+
+  const fetchCidades = async () => {
+    const { data, error } = await supabase
+      .from("cidades")
+      .select("id, nome")
+      .order("nome");
+    if (error) console.error("fetchCidades error:", error);
+    setCidades(data || []);
+  };
+
+  const fetchBairros = async () => {
+    const { data, error } = await supabase
+      .from("bairros")
+      .select("id, nome, cidade_id")
+      .order("nome");
+    if (error) console.error("fetchBairros error:", error);
+    setBairros(data || []);
   };
 
   const fetchHistory = async (visitId) => {
@@ -386,7 +408,7 @@ export default function VistoriaModal({ visit, onClose }) {
                       disabled={!canEditDetails}
                     >
                       <option value="">Selecione...</option>
-                      {cidadesData.data.map((c) => (
+                      {cidades.map((c) => (
                         <option key={c.id} value={c.nome}>
                           {c.nome}
                         </option>

@@ -70,17 +70,12 @@ export default function Dashboard() {
         .select("id, full_name")
         .order("full_name");
 
-      // Fetch Cities and Neighborhoods from visits (distinct)
-      const { data: visits } = await supabase
-        .from("visits")
-        .select("city, neighborhood");
+      // Fetch Cities and Neighborhoods from DB
+      const { data: dbCidades } = await supabase.from("cidades").select("nome");
+      const { data: dbBairros } = await supabase.from("bairros").select("nome");
 
-      const uniqueCities = [
-        ...new Set(visits?.map((v) => v.city).filter(Boolean)),
-      ].sort();
-      const uniqueNeighborhoods = [
-        ...new Set(visits?.map((v) => v.neighborhood).filter(Boolean)),
-      ].sort();
+      const uniqueCities = dbCidades ? dbCidades.map((c) => c.nome).sort() : [];
+      const uniqueNeighborhoods = dbBairros ? dbBairros.map((b) => b.nome).sort() : [];
 
       setOptions({
         cities: uniqueCities || [],
