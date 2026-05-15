@@ -30,20 +30,20 @@ export default function Visits() {
   }, []);
 
   const fetchCidades = async () => {
-    const { data } = await supabase.from("cidades").select("id, nome").order("nome");
+    const { data } = await supabase.from("City").select("id, name").order("name");
     setDbCidades(data || []);
   };
 
   const fetchBairros = async () => {
-    const { data } = await supabase.from("bairros").select("id, nome, cidade_id").order("nome");
+    const { data } = await supabase.from("Neighborhood").select("id, name, city_id").order("name");
     setDbBairros(data || []);
   };
 
   const availableNeighborhoods = selectedCity
     ? dbBairros.filter(
         (b) =>
-          b.cidade_id ===
-          dbCidades.find((c) => c.nome === selectedCity)?.id
+          b.city_id ===
+          dbCidades.find((c) => c.name === selectedCity)?.id
       )
     : dbBairros;
 
@@ -153,8 +153,8 @@ export default function Visits() {
         >
           <option value="">Todas as Cidades</option>
           {dbCidades.map((c) => (
-            <option key={c.id} value={c.nome}>
-              {c.nome}
+            <option key={c.id} value={c.name}>
+              {c.name}
             </option>
           ))}
         </select>
@@ -165,8 +165,8 @@ export default function Visits() {
         >
           <option value="">Todos os Bairros</option>
           {availableNeighborhoods.map((b) => (
-            <option key={b.id} value={b.nome}>
-              {b.nome}
+            <option key={b.id} value={b.name}>
+              {b.name}
             </option>
           ))}
         </select>
