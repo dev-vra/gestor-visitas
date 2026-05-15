@@ -212,4 +212,5 @@ INSERT INTO public.bairros (id, nome, cidade_id) VALUES
   (127, 'Jardim Planalto', 20)
 ON CONFLICT (id) DO NOTHING;
 
+
 SELECT setval('public.bairros_id_seq', (SELECT MAX(id) FROM public.bairros));
