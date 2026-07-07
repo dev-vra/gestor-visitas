@@ -106,6 +106,7 @@ export default function Users() {
                 <th>Nome</th>
                 <th>Email</th>
                 <th>Cargo</th>
+                <th>Status</th>
                 <th>Ações</th>
               </tr>
             </thead>
@@ -119,6 +120,29 @@ export default function Users() {
                   <td>
                     <span className={styles.roleBadge} data-role={u.role}>
                       {u.role ? u.role.toUpperCase() : "SEM CARGO"}
+                    </span>
+                  </td>
+                  <td>
+                    <span
+                      style={{
+                        display: "inline-flex",
+                        alignItems: "center",
+                        gap: "0.35rem",
+                        fontSize: "0.8rem",
+                        fontWeight: 600,
+                        color: u.is_active === false ? "#f97316" : "#22c55e",
+                      }}
+                    >
+                      <span
+                        style={{
+                          width: "8px",
+                          height: "8px",
+                          borderRadius: "50%",
+                          background:
+                            u.is_active === false ? "#f97316" : "#22c55e",
+                        }}
+                      />
+                      {u.is_active === false ? "Desabilitado" : "Ativo"}
                     </span>
                   </td>
                   <td>
