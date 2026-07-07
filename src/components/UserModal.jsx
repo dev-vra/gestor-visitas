@@ -3,7 +3,7 @@ import { supabase } from "../lib/supabase";
 import { createClient } from "@supabase/supabase-js";
 import { useAuth } from "../contexts/AuthContext";
 import styles from "../styles/VisitModal.module.css"; // Reuse modal styles
-import { X, Save, Lock } from "lucide-react";
+import { X, Save, Lock, UserX, UserCheck } from "lucide-react";
 
 export default function UserModal({ userToEdit, onClose }) {
   const isEditing = !!userToEdit;
@@ -21,6 +21,7 @@ export default function UserModal({ userToEdit, onClose }) {
   const [adminSetPassword, setAdminSetPassword] = useState("");
   const [confirmAdminSetPassword, setConfirmAdminSetPassword] = useState("");
   const [adminPassword, setAdminPassword] = useState("");
+  const [isActive, setIsActive] = useState(userToEdit?.is_active !== false);
   const { user, profile } = useAuth(); // Current logged in admin
 
   useEffect(() => {
@@ -31,6 +32,7 @@ export default function UserModal({ userToEdit, onClose }) {
         full_name: userToEdit.full_name || "",
         role: userToEdit.role || "agente",
       });
+      setIsActive(userToEdit.is_active !== false);
     }
   }, [userToEdit]);
 
@@ -206,6 +208,49 @@ export default function UserModal({ userToEdit, onClose }) {
     }
   };
 
+  const handleToggleActive = async () => {
+    const nextActive = !isActive;
+    const actionLabel = nextActive ? "reabilitar" : "desabilitar";
+
+    if (userToEdit.id === user.id) {
+      alert("Você não pode desabilitar a sua própria conta.");
+      return;
+    }
+
+    if (
+      !window.confirm(
+        `Tem certeza que deseja ${actionLabel} o usuário "${userToEdit.full_name}"?` +
+          (nextActive
+            ? "\nEle voltará a poder fazer login."
+            : "\nEle não poderá mais fazer login, mas o cadastro e o histórico serão mantidos.")
+      )
+    ) {
+      return;
+    }
+
+    setLoading(true);
+    try {
+      const { error } = await supabase.rpc("admin_set_user_active", {
+        target_user_id: userToEdit.id,
+        active: nextActive,
+      });
+
+      if (error) throw error;
+
+      setIsActive(nextActive);
+      alert(
+        nextActive
+          ? "Usuário reabilitado com sucesso!"
+          : "Usuário desabilitado com sucesso!"
+      );
+    } catch (err) {
+      console.error(err);
+      alert(`Erro ao ${actionLabel} usuário: ` + err.message);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
     <div className={styles.overlay}>
       <div
@@ -221,6 +266,23 @@ export default function UserModal({ userToEdit, onClose }) {
 
         <form onSubmit={handleSubmit} className={styles.content}>
           <div className={styles.form}>
+            {isEditing && !isActive && (
+              <div
+                className="p-3 rounded-lg"
+                style={{
+                  background: "rgba(249, 115, 22, 0.1)",
+                  border: "1px solid rgba(249, 115, 22, 0.3)",
+                  color: "#f97316",
+                  display: "flex",
+                  alignItems: "center",
+                  gap: "0.5rem",
+                  fontSize: "0.875rem",
+                }}
+              >
+                <UserX size={16} /> Este usuário está desabilitado e não pode
+                fazer login.
+              </div>
+            )}
             <div className={styles.inputGroup}>
               <label>Nome Completo</label>
               <input
@@ -351,6 +413,31 @@ export default function UserModal({ userToEdit, onClose }) {
                   >
                     <Lock size={16} /> Alterar Senha
                   </button>
+                  {userToEdit.id !== user.id && (
+                    <button
+                      type="button"
+                      onClick={handleToggleActive}
+                      disabled={loading}
+                      className={styles.cancelBtn}
+                      style={{
+                        color: isActive ? "#f97316" : "#22c55e",
+                        borderColor: isActive ? "#f97316" : "#22c55e",
+                        display: "flex",
+                        alignItems: "center",
+                        gap: "0.5rem",
+                      }}
+                    >
+                      {isActive ? (
+                        <>
+                          <UserX size={16} /> Desabilitar
+                        </>
+                      ) : (
+                        <>
+                          <UserCheck size={16} /> Reabilitar
+                        </>
+                      )}
+                    </button>
+                  )}
                 </div>
               )}
             </div>

@@ -41,6 +41,14 @@ export const AuthProvider = ({ children }) => {
         .single();
 
       if (!error && data) {
+        // Se o usuário foi desabilitado durante a sessão, encerra o acesso.
+        if (data.is_active === false) {
+          await supabase.auth.signOut();
+          setProfile(null);
+          setUser(null);
+          alert("Sua conta foi desabilitada. Entre em contato com o gestor.");
+          return;
+        }
         setProfile(data);
       }
     } catch (error) {
